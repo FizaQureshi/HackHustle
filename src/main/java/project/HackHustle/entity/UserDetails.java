@@ -12,17 +12,17 @@ import lombok.Setter;
 @AllArgsConstructor
 
 @Entity
-@Table(name = "user")
-public class User
+@Table(name = "user_details")
+public class UserDetails
 {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "uid", nullable = false)
     private String uid;
 
-    @Column(name = "userEmail", nullable = false, unique = true)
-    private String userEmail_id;
+    @Column(name = "email_id", nullable = false, unique = true)
+    private String email_id;
 
-    @Column(name = "userPassword", nullable = false)
-    private String userPassword;
+    @Column(name = "password", nullable = false)
+    private String password;
 }

@@ -17,27 +17,27 @@ public class Question
 {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "QuestionID", nullable = false)
+    @Column(name = "question_id", nullable = false)
     private String questionID;
 
-    @Column(name = "QuestionText", nullable = false)
+    @Column(name = "question_text", nullable = false)
     private String questionText;
 
-    @Column(name = "Option1", nullable = false)
+    @Column(name = "option1", nullable = false)
     private String option1;
 
-    @Column(name = "Option2", nullable = false)
+    @Column(name = "option2", nullable = false)
     private String option2;
 
-    @Column(name = "Option3", nullable = false)
+    @Column(name = "option3", nullable = false)
     private String option3;
 
-    @Column(name = "Option4", nullable = false)
+    @Column(name = "option4", nullable = false)
     private String option4;
 
-    @Column(name = "CorrectAnswer", nullable = false)
+    @Column(name = "correct_answer", nullable = false)
     private String correctAnswer;
 
-    @Column(name = "TopicID", nullable = false)
+    @Column(name = "topic_id", nullable = false)
     private String topicID;
 }

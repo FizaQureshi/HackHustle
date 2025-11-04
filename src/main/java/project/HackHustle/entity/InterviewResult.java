@@ -12,44 +12,44 @@ import lombok.Setter;
 @AllArgsConstructor
 
 @Entity
-@Table(name = "interviewresult")
+@Table(name = "interview_result")
 public class InterviewResult
 {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "InterviewResultID", nullable = false)
+    @Column(name = "interview_result_id", nullable = false)
     private String interviewResultID;
 
-    @Column(name = "Question_1", nullable = false)
+    @Column(name = "question_1", nullable = false)
     private String question_1;
 
-    @Column(name = "ProvidedAns_1", nullable = false)
+    @Column(name = "provided_answer_1", nullable = false)
     private String providedAns_1;
 
-    @Column(name = "BetterAns_1", nullable = false)
+    @Column(name = "better_answer_1", nullable = false)
     private String betterAns_1;
 
-    @Column(name = "Question_2", nullable = false)
+    @Column(name = "question_2", nullable = false)
     private String question_2;
 
-    @Column(name = "ProvidedAns_2", nullable = false)
+    @Column(name = "provided_answer_2", nullable = false)
     private String providedAns_2;
 
-    @Column(name = "BetterAns_2", nullable = false)
+    @Column(name = "better_answer_2", nullable = false)
     private String betterAns_2;
 
-    @Column(name = "Question_3", nullable = false)
+    @Column(name = "question_3", nullable = false)
     private String question_3;
 
-    @Column(name = "ProvidedAns_3", nullable = false)
+    @Column(name = "provided_answer_3", nullable = false)
     private String providedAns_3;
 
-    @Column(name = "BetterAns_3", nullable = false)
+    @Column(name = "better_answer_3", nullable = false)
     private String betterAns_3;
 
-    @Column(name = "InterviewScore", nullable = false)
+    @Column(name = "interview_score", nullable = false)
     private Long interviewScore;
 
-    @Column(name = "InterviewID", nullable = false)
+    @Column(name = "interview_id", nullable = false)
     private String interviewID;
 }

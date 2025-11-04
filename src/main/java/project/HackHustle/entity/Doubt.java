@@ -19,27 +19,27 @@ public class Doubt
 {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "DoubtID", nullable = false)
+    @Column(name = "doubt_id", nullable = false)
     private String doubtID;
 
-    @Column(name = "Status", nullable = false, columnDefinition = "varchar(255) default 'False'")
-    private String  status;
+    @Column(name = "doubt_status", nullable = false, columnDefinition = "varchar(255) default 'False'")
+    private String  doubtStatus;
 
-    @Column(name = "Date", nullable = false)
+    @Column(name = "date", nullable = false)
     private LocalDateTime date;
 
-    @Column(name = "QueryAsked", nullable = false)
+    @Column(name = "query_asked", nullable = false)
     private String queryAsked;
 
-    @Column(name = "AnswerProvided", nullable = false)
+    @Column(name = "answer_provided", nullable = false)
     private String answerProvided;
 
-    @Column(name = "StudentID", nullable = false)
+    @Column(name = "student_id", nullable = false)
     private String studentID;
 
-    @Column(name = "QuestionID", nullable = false)
+    @Column(name = "question_id", nullable = false)
     private String questionID;
 
-    @Column(name = "TeacherID", nullable = false)
+    @Column(name = "teacher_id", nullable = false)
     private String teacherID;
 }

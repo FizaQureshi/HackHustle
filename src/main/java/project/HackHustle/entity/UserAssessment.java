@@ -14,26 +14,26 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 
 @Entity
-@Table(name = "userassessment")
+@Table(name = "user_assessment")
 public class UserAssessment
 {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "AssessmentID", nullable = false)
+    @Column(name = "assessment_id", nullable = false)
     private String assessmentID;
 
-    @Column(name = "Date", nullable = false)
+    @Column(name = "date", nullable = false)
     private LocalDateTime date;
 
-    @Column(name = "SubjectID", nullable = false)
+    @Column(name = "subject_id", nullable = false)
     private String subjectID;
 
-    @Column(name = "TopicID", nullable = false)
+    @Column(name = "topic_id", nullable = false)
     private String topicID;
 
-    @Column(name = "StudentID", nullable = false)
+    @Column(name = "student_id", nullable = false)
     private String studentID;
 
-    @Column(name = "AssessmentScore", nullable = false)
+    @Column(name = "assessment_score", nullable = false)
     private Long assessmentScore;
 }

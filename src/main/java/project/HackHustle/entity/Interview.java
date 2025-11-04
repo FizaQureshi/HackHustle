@@ -19,12 +19,12 @@ public class Interview
 {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "InterviewID", nullable = false)
+    @Column(name = "interview_id", nullable = false)
     private String interviewID;
 
-    @Column(name = "Date", nullable = false)
+    @Column(name = "date", nullable = false)
     private LocalDateTime date;
 
-    @Column(name = "StudentID", nullable = false)
+    @Column(name = "student_id", nullable = false)
     private String studentID;
 }

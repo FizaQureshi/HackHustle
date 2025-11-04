@@ -18,21 +18,24 @@ public class Teacher
 {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "TeacherID", nullable = false)
+    @Column(name = "teacher_id", nullable = false)
     private String teacherID;
 
-    @Column(name = "TeacherName", nullable = false)
-    private String teacherName;
+    @Column(name = "first_name", nullable = false)
+    private String firstName;
 
-    @Column(name = "Email", nullable = false, unique = true)
+    @Column(name = "last_name", nullable = false)
+    private String lastName;
+
+    @Column(name = "email_id", nullable = false, unique = true)
     private String email_id;
 
-    @Column(name = "Rating", nullable = false, columnDefinition = "long default 0")
+    @Column(name = "rating", nullable = false, columnDefinition = "long default 0")
     private Long rating;
 
-    @Column(name = "SubjectAssociated", nullable = false)
+    @Column(name = "subject_associated", nullable = false)
     private String subjectAssociated;   //a teacher handles only one subject
 
-    @Column(name = "Institute", nullable = false)
+    @Column(name = "institute", nullable = false)
     private String institute;
 }

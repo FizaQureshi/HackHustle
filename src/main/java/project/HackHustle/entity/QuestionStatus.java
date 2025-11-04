@@ -12,12 +12,12 @@ import lombok.Setter;
 @AllArgsConstructor
 
 @Entity
-@Table(name = "questionstatus")
+@Table(name = "question_status")
 public class QuestionStatus
 {
     @EmbeddedId
     private QuestionStatusKey id;
 
-    @Column(name = "Status", nullable = false, columnDefinition = "varchar(255) default 'False'")
+    @Column(name = "question_status", nullable = false, columnDefinition = "varchar(255) default 'False'")
     private String status;
 }

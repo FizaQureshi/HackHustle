@@ -18,10 +18,10 @@ import java.io.Serializable;
 @Embeddable
 public class QuestionStatusKey implements Serializable
 {
-    @Column(name = "QuestionID", nullable = false)
+    @Column(name = "question_id", nullable = false)
     private String questionID;
 
-    @Column(name = "StudentID", nullable = false)
+    @Column(name = "student_id", nullable = false)
     private String studentID;
 
     @Override

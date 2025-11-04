@@ -17,12 +17,12 @@ public class Topic
 {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "TopicID", nullable = false)
+    @Column(name = "topic_id", nullable = false)
     private String topicID;
 
-    @Column(name = "TopicName", nullable = false)
+    @Column(name = "topic_name", nullable = false)
     private String topicName;
 
-    @Column(name = "SubjectID", nullable = false)
+    @Column(name = "subject_id", nullable = false)
     private String subjectID;
 }

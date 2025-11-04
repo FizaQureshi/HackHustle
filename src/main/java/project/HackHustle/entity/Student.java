@@ -18,21 +18,21 @@ public class Student
 {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "StudentID", nullable = false)
+    @Column(name = "student_id", nullable = false)
     private String studentID;
 
-    @Column(name = "FirstName", nullable = false)
+    @Column(name = "first_name", nullable = false)
     private String firstName;
 
-    @Column(name = "LastName", nullable = false)
+    @Column(name = "last_name", nullable = false)
     private String lastName;
 
-    @Column(name = "Email", nullable = false, unique = true)
+    @Column(name = "email_id", nullable = false, unique = true)
     private String email_id;
 
-    @Column(name = "Points", nullable = false, columnDefinition = "long default 0")
+    @Column(name = "points", nullable = false, columnDefinition = "long default 0")
     private Long points;
 
-    @Column(name = "QuizAttempted", nullable = false, columnDefinition = "long default 0")
+    @Column(name = "quiz_attempted", nullable = false, columnDefinition = "long default 0")
     private Long quizAttempted;
 }
