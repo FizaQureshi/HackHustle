@@ -36,4 +36,7 @@ public class QuizBattle
 
     @Column(name = "subject_name", nullable = false)
     private String subjectName;
+
+    @Column(name = "battle_id", nullable = false)
+    private Long battleId;
 }
