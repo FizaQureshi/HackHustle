@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.UUID;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -16,10 +18,15 @@ import lombok.Setter;
 
 public class Student
 {
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.UUID)
+//    @Column(name = "student_id", nullable = false)
+//    private UUID studentID;
+
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "student_id", nullable = false)
-    private String studentID;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long studentId;
+
 
     @Column(name = "first_name", nullable = false)
     private String firstName;
@@ -28,11 +35,11 @@ public class Student
     private String lastName;
 
     @Column(name = "email_id", nullable = false, unique = true)
-    private String email_id;
+    private String emailId;
 
-    @Column(name = "points", nullable = false, columnDefinition = "long default 0")
-    private Long points;
+    @Column(name = "points", nullable = false)
+    private Long points = 0L;
 
-    @Column(name = "quiz_attempted", nullable = false, columnDefinition = "long default 0")
-    private Long quizAttempted;
+    @Column(name = "quiz_attempted", nullable = false)
+    private Long quizAttempted = 0L;
 }

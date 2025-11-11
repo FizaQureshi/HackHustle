@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.UUID;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -16,10 +18,12 @@ import lombok.Setter;
 
 public class Teacher
 {
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.UUID)
+//    @Column(name = "teacher_id", nullable = false)
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "teacher_id", nullable = false)
-    private String teacherID;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long teacherID;
 
     @Column(name = "first_name", nullable = false)
     private String firstName;
@@ -28,10 +32,10 @@ public class Teacher
     private String lastName;
 
     @Column(name = "email_id", nullable = false, unique = true)
-    private String email_id;
+    private String emailId;
 
-    @Column(name = "rating", nullable = false, columnDefinition = "long default 0")
-    private Long rating;
+    @Column(name = "rating", nullable = false)
+    private Long rating = 0L;
 
     @Column(name = "subject_associated", nullable = false)
     private String subjectAssociated;   //a teacher handles only one subject
