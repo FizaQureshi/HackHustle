@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.UUID;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -15,13 +17,15 @@ import lombok.Setter;
 @Table(name = "user_details")
 public class UserDetails
 {
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.UUID)
+//    @Column(name = "uid", nullable = false)
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "uid", nullable = false)
-    private String uid;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long uid;
 
     @Column(name = "email_id", nullable = false, unique = true)
-    private String email_id;
+    private String emailId;
 
     @Column(name = "password", nullable = false)
     private String password;
