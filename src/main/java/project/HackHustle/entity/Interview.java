@@ -18,9 +18,9 @@ import java.time.LocalDateTime;
 public class Interview
 {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "interview_id", nullable = false)
-    private String interviewID;
+    private Long interviewID;
 
     @Column(name = "date", nullable = false)
     private LocalDateTime date;

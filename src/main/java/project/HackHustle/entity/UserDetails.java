@@ -22,6 +22,7 @@ public class UserDetails
 //    @Column(name = "uid", nullable = false)
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "uid", nullable = false)
     private Long uid;
 
     @Column(name = "email_id", nullable = false, unique = true)

@@ -16,9 +16,9 @@ import lombok.Setter;
 public class InterviewResult
 {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "interview_result_id", nullable = false)
-    private String interviewResultID;
+    private Long interviewResultID;
 
     @Column(name = "question_1", nullable = false)
     private String question_1;

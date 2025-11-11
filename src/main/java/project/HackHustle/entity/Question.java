@@ -16,9 +16,9 @@ import lombok.Setter;
 public class Question
 {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "question_id", nullable = false)
-    private String questionID;
+    private Long questionID;
 
     @Column(name = "question_text", nullable = false)
     private String questionText;

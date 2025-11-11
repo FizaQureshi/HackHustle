@@ -18,9 +18,9 @@ import java.time.LocalDateTime;
 public class QuizBattle
 {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "quiz_id", nullable = false)
-    private String quizID;
+    private Long quizID;
 
     @Column(name = "date", nullable = false)
     private LocalDateTime date;

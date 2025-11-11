@@ -23,6 +23,7 @@ public class Teacher
 //    @Column(name = "teacher_id", nullable = false)
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "teacher_id", nullable = false)
     private Long teacherID;
 
     @Column(name = "first_name", nullable = false)

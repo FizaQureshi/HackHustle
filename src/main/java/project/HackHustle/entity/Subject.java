@@ -16,9 +16,9 @@ import lombok.Setter;
 public class Subject
 {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "subject_id", nullable = false)
-    private String subjectID;
+    private Long subjectID;
 
     @Column(name = "subject_name", nullable = false)
     private String subjectName;

@@ -19,10 +19,10 @@ import java.io.Serializable;
 public class QuestionStatusKey implements Serializable
 {
     @Column(name = "question_id", nullable = false)
-    private String questionID;
+    private Long questionID;
 
     @Column(name = "student_id", nullable = false)
-    private String studentID;
+    private Long studentID;
 
     @Override
     public boolean equals(Object obj)

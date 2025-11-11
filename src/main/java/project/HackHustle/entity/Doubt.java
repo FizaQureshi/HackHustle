@@ -18,9 +18,9 @@ import java.time.LocalDateTime;
 public class Doubt
 {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "doubt_id", nullable = false)
-    private String doubtID;
+    private Long doubtID;
 
     @Column(name = "doubt_status", nullable = false, columnDefinition = "varchar(255) default 'False'")
     private String  doubtStatus;
