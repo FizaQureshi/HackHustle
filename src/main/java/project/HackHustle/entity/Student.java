@@ -38,6 +38,9 @@ public class Student
     @Column(name = "email_id", nullable = false, unique = true)
     private String emailId;
 
+    @Column(name = "password", nullable = false)
+    private String password;
+
     @Column(name = "points", nullable = false)
     private Long points = 0L;
 

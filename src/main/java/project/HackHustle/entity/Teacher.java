@@ -35,6 +35,9 @@ public class Teacher
     @Column(name = "email_id", nullable = false, unique = true)
     private String emailId;
 
+    @Column(name = "password", nullable = false)
+    private String password;
+
     @Column(name = "rating", nullable = false)
     private Long rating = 0L;
 
