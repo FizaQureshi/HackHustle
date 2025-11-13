@@ -44,6 +44,7 @@ public class TeacherController
     }
 
 
+    //http://localhost:8080/api/teachers/1001
     @PutMapping("{id}")
     public ResponseEntity<TeacherDto> updateTeacher(@PathVariable("id") Long teacherId, @RequestBody TeacherDto updatedTeacher)
     {
@@ -51,7 +52,7 @@ public class TeacherController
         return ResponseEntity.ok(teacherDto);
     }
 
-
+    //http://localhost:8080/api/teachers/1001
     @DeleteMapping("{id}")
     public ResponseEntity<String> deleteTeacher(@PathVariable("id") Long teacherId)
     {
@@ -60,6 +61,7 @@ public class TeacherController
     }
 
 
+    //http://localhost:8080/api/teachers/login
     @PostMapping("/login")
     public ResponseEntity<Void> loginTeacher(@RequestBody LoginDto loginDto)
     {

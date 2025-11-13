@@ -44,6 +44,7 @@ public class StudentController
     }
 
 
+    //http://localhost:8080/api/students/1001
     @PutMapping("{id}")
     public ResponseEntity<StudentDto> updateStudent(@PathVariable("id") Long studentId, @RequestBody StudentDto updatedStudent)
     {
@@ -52,6 +53,7 @@ public class StudentController
     }
 
 
+    //http://localhost:8080/api/students/1004
     @DeleteMapping("{id}")
     public ResponseEntity<String> deleteStudent(@PathVariable("id") Long studentId)
     {
@@ -60,6 +62,7 @@ public class StudentController
     }
 
 
+    //http://localhost:8080/api/students/login
     @PostMapping("/login")
     public ResponseEntity<Void> loginStudent(@RequestBody LoginDto loginDto)
     {
