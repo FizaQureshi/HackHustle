@@ -26,13 +26,13 @@ public class UserAssessment
     private LocalDateTime date;
 
     @Column(name = "subject_id", nullable = false)
-    private String subjectID;
+    private Long subjectID;
 
     @Column(name = "topic_id", nullable = false)
-    private String topicID;
+    private Long topicID;
 
     @Column(name = "student_id", nullable = false)
-    private String studentID;
+    private Long studentID;
 
     @Column(name = "assessment_score", nullable = false)
     private Long assessmentScore;
