@@ -22,8 +22,8 @@ public class Doubt
     @Column(name = "doubt_id", nullable = false)
     private Long doubtID;
 
-    @Column(name = "doubt_status", nullable = false, columnDefinition = "varchar(255) default 'False'")
-    private String  doubtStatus;
+    @Column(name = "doubt_status", nullable = false)
+    private String  doubtStatus = "False";
 
     @Column(name = "date", nullable = false)
     private LocalDateTime date;
