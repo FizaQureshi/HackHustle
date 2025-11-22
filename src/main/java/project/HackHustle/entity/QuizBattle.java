@@ -26,7 +26,7 @@ public class QuizBattle
     private LocalDateTime date;
 
     @Column(name = "student_id", nullable = false)
-    private String studentID;
+    private Long studentID;
 
     @Column(name = "quiz_score", nullable = false)
     private Long quizScore;

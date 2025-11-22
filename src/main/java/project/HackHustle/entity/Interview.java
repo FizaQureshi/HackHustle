@@ -26,5 +26,5 @@ public class Interview
     private LocalDateTime date;
 
     @Column(name = "student_id", nullable = false)
-    private String studentID;
+    private Long studentID;
 }

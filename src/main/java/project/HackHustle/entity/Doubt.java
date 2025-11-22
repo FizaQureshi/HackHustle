@@ -35,11 +35,11 @@ public class Doubt
     private String answerProvided;
 
     @Column(name = "student_id", nullable = false)
-    private String studentID;
+    private Long studentID;
 
     @Column(name = "question_id", nullable = false)
-    private String questionID;
+    private Long questionID;
 
     @Column(name = "teacher_id", nullable = false)
-    private String teacherID;
+    private Long teacherID;
 }

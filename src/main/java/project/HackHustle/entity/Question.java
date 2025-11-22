@@ -39,5 +39,5 @@ public class Question
     private String correctAnswer;
 
     @Column(name = "topic_id", nullable = false)
-    private String topicID;
+    private Long topicID;
 }
