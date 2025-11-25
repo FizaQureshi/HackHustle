@@ -53,30 +53,32 @@ public class DoubtServiceImpl implements DoubtService{
     }
 
     @Override
-    public List<DoubtDto> teacherdoubtlist(String id) {
-        List<Doubt> alldoubts = doubtRepository.findAll();
-        List<Doubt> teacherlist = alldoubts.stream().filter(d->d.getTeacherID().equalsIgnoreCase(id)).toList();
-        if (teacherlist.isEmpty()) {
+    public List<DoubtDto> teacherdoubtlist(Long id) {
+        List<Doubt> allDoubts = doubtRepository.findAll();
+
+        List<Doubt> teacherList = allDoubts.stream()
+                .filter(d -> d.getTeacherID() != null && d.getTeacherID().equals(id)).toList();
+
+        if (teacherList.isEmpty()) {
             throw new ResourceNotFoundException("No doubts found for teacher ID: " + id);
         }
-        List<DoubtDto> dtoList = teacherlist.stream()
-                .map(DoubtMapper::mapToDoubtDto)
-                .toList();
-        return dtoList;
 
+        return teacherList.stream().map(DoubtMapper::mapToDoubtDto).toList();
     }
+
     @Override
-    public List<DoubtDto> studentdoubtlist(String id) {
-        List<Doubt> alldoubts = doubtRepository.findAll();
-        List<Doubt> teacherlist = alldoubts.stream().filter(d->d.getStudentID().equalsIgnoreCase(id)).toList();
-        if (teacherlist.isEmpty()) {
+    public List<DoubtDto> studentdoubtlist(Long id) {
+        List<Doubt> allDoubts = doubtRepository.findAll();
+
+        List<Doubt> studentList = allDoubts.stream()
+                .filter(d -> d.getStudentID() != null && d.getStudentID().equals(id)).toList();
+
+        if (studentList.isEmpty()) {
             throw new ResourceNotFoundException("No doubts found for student ID: " + id);
         }
-        List<DoubtDto> dtoList = teacherlist.stream()
-                .map(DoubtMapper::mapToDoubtDto)
-                .toList();
-        return dtoList;
 
+        return studentList.stream().map(DoubtMapper::mapToDoubtDto).toList();
     }
+
 
 }

@@ -10,7 +10,7 @@ public interface DoubtService {
     DoubtDto saveDoubt(DoubtDto doubtDto) ;
     DoubtDto updateDoubt(DoubtDto doubtDto);
     void deleteDoubt();
-    List<DoubtDto> teacherdoubtlist(String id);
+    List<DoubtDto> teacherdoubtlist(Long id);
 
-    List<DoubtDto> studentdoubtlist(String id);
+    List<DoubtDto> studentdoubtlist(Long id);
 }
