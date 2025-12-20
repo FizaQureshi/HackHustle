@@ -34,7 +34,7 @@ public class DoubtController {
     }
 
     @GetMapping("teacher/{id}")
-  public ResponseEntity<?> teacherdoubtlist(@PathVariable String id)
+  public ResponseEntity<?> teacherdoubtlist(@PathVariable Long id)
     {
         List<DoubtDto> list = doubtService.teacherdoubtlist(id);
         if (list.isEmpty()) {
@@ -44,7 +44,7 @@ public class DoubtController {
         return ResponseEntity.ok(list);
     }
     @GetMapping("student/{id}")
-    public ResponseEntity<?> studentdoubtlist(@PathVariable String id)
+    public ResponseEntity<?> studentdoubtlist(@PathVariable Long id)
     {
         List<DoubtDto> list = doubtService.studentdoubtlist(id);
         if (list.isEmpty()) {
