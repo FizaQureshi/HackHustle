@@ -53,9 +53,13 @@ public class DoubtServiceImpl implements DoubtService{
     }
 
     @Override
-    public List<DoubtDto> teacherdoubtlist(String id) {
+    public List<DoubtDto> teacherdoubtlist(Long  id) {
         List<Doubt> alldoubts = doubtRepository.findAll();
-        List<Doubt> teacherlist = alldoubts.stream().filter(d->d.getTeacherID().equalsIgnoreCase(id)).toList();
+        //List<Doubt> teacherlist = alldoubts.stream().filter(d->d.getTeacherID().equals(id).toList());
+        List<Doubt> teacherlist = alldoubts.stream()
+                .filter(d -> d.getTeacherID().equals(id))
+                .toList();
+
         if (teacherlist.isEmpty()) {
             throw new ResourceNotFoundException("No doubts found for teacher ID: " + id);
         }
