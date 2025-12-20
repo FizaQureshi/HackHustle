@@ -11,6 +11,7 @@ import project.HackHustle.service.TeacherService;
 
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:3000")
 @AllArgsConstructor
 @RestController
 @RequestMapping("/api/teachers")

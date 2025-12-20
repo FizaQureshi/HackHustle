@@ -9,7 +9,7 @@ import project.HackHustle.service.DoubtService;
 
 import java.util.List;
 
-
+@CrossOrigin(origins = "http://localhost:3000")
 @AllArgsConstructor
 @RestController
 @RequestMapping("/api/doubts")
