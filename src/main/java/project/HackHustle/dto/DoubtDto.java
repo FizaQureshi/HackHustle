@@ -18,7 +18,7 @@ public class DoubtDto {
     private LocalDateTime date;
     private String queryAsked;
     private String answerProvided;
-    private String studentID;
-    private String questionID;
-    private String teacherID;
+    private Long  studentID;
+    private Long  questionID;
+    private Long teacherID;
 }
