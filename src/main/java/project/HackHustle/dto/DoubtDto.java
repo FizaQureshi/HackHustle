@@ -22,8 +22,7 @@ public class DoubtDto {
     private Long  studentID;
     private Long  questionID;
 
-    private Long studentID;
-    private Long questionID;
+
 
     private Long teacherID;
 }
