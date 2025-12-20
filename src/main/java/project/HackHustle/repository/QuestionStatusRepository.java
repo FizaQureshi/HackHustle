@@ -5,4 +5,6 @@ import project.HackHustle.entity.QuestionStatus;
 import project.HackHustle.entity.QuestionStatusKey;
 
 public interface QuestionStatusRepository extends JpaRepository<QuestionStatus, QuestionStatusKey> {
+
+
 }
