@@ -13,6 +13,7 @@ public class InterviewResultDto {
 
     private Long interviewResultID;
     private String question_1;
+    private String providedAns_1;
     private String betterAns_1;
     private String question_2;
     private String providedAns_2;
@@ -21,5 +22,5 @@ public class InterviewResultDto {
     private String providedAns_3;
     private String betterAns_3;
     private Long interviewScore;
-    private String interviewID;
+    private Long interviewID;
 }
