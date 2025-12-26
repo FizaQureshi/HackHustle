@@ -1,11 +1,9 @@
 package project.HackHustle.service;
 
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Service;
 import project.HackHustle.dto.DoubtDto;
 import project.HackHustle.entity.Doubt;
-import project.HackHustle.entity.Student;
 import project.HackHustle.exception.ResourceNotFoundException;
 import project.HackHustle.mapper.DoubtMapper;
 import project.HackHustle.repository.DoubtRepository;

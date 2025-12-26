@@ -1,0 +1,23 @@
+package project.HackHustle.dto;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import java.time.LocalDateTime;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+public class QuizBattleDto
+{
+    private Long quizID;
+    private LocalDateTime date;
+    private Long studentID;
+    private Long quizScore;
+    private String status;
+    private String subjectName;
+    private Long battleId;
+}
