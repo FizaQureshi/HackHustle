@@ -46,4 +46,11 @@ public class Student
 
     @Column(name = "quiz_attempted", nullable = false)
     private Long quizAttempted = 0L;
+
+    // Set default values in constructor
+    @PrePersist
+    public void prePersist() {
+        if (points == null) points = 0L;
+        if (quizAttempted == null) quizAttempted = 0L;
+    }
 }

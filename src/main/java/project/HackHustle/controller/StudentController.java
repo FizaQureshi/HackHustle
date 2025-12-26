@@ -9,7 +9,9 @@ import project.HackHustle.dto.StudentDto;
 import project.HackHustle.exception.ResourceNotFoundException;
 import project.HackHustle.service.StudentService;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @AllArgsConstructor
@@ -81,5 +83,26 @@ public class StudentController
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();      //401 Unauthorized -> wrong password
         }
     }
+
+//    @PostMapping("/login")
+//    public ResponseEntity<Map<String, String>> loginStudent(@RequestBody LoginDto loginDto)
+//    {
+//        try {
+//            studentService.loginStudent(loginDto.getEmailId(), loginDto.getPassword());
+//            Map<String, String> response = new HashMap<>();
+//            response.put("message", "Login successful");
+//            // optionally, return token: response.put("token", jwtToken);
+//            return ResponseEntity.ok(response);
+//        } catch (ResourceNotFoundException ex) {
+//            Map<String, String> response = new HashMap<>();
+//            response.put("message", "User not found");
+//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+//        } catch (IllegalArgumentException ex) {
+//            Map<String, String> response = new HashMap<>();
+//            response.put("message", "Incorrect password");
+//            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
+//        }
+//    }
+
 }
 
