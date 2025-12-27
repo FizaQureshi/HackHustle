@@ -51,5 +51,5 @@ public class InterviewResult
     private Long interviewScore;
 
     @Column(name = "interview_id", nullable = false)
-    private String interviewID;
+    private Long interviewID;
 }

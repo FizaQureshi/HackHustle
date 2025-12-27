@@ -13,9 +13,9 @@ import java.util.List;
 @Service
 @AllArgsConstructor
 
-public class DoubtServiceImpl implements DoubtService{
+public class DoubtServiceImpl implements DoubtService {
 
-     private DoubtRepository doubtRepository;
+    private DoubtRepository doubtRepository;
 
 
     @Override
@@ -38,45 +38,52 @@ public class DoubtServiceImpl implements DoubtService{
         doubt.setAnswerProvided(doubtDto.getAnswerProvided());
         doubtRepository.save(doubt);
 
-        return  DoubtMapper.mapToDoubtDto(doubt);
+        return DoubtMapper.mapToDoubtDto(doubt);
     }
 
     @Override
     public void deleteDoubt() {
-        List<Doubt> alldoubts =  doubtRepository.findAll();
-        List<Doubt> resolved  = alldoubts.stream().filter(d -> d.getDoubtStatus().equalsIgnoreCase("resolved"))
+        List<Doubt> alldoubts = doubtRepository.findAll();
+        List<Doubt> resolved = alldoubts.stream().filter(d -> d.getDoubtStatus().equalsIgnoreCase("resolved"))
                 .toList();
 
         doubtRepository.deleteAll(resolved);
     }
 
     @Override
+
     public List<DoubtDto> teacherdoubtlist(Long id) {
-        List<Doubt> allDoubts = doubtRepository.findAll();
+        List<Doubt> alldoubts = doubtRepository.findAll();
+        //List<Doubt> teacherlist = alldoubts.stream().filter(d->d.getTeacherID().equals(id).toList());
+        List<Doubt> teacherlist = alldoubts.stream()
+                .filter(d -> d.getTeacherID().equals(id))
+                .toList();
 
-        List<Doubt> teacherList = allDoubts.stream()
-                .filter(d -> d.getTeacherID() != null && d.getTeacherID().equals(id)).toList();
+        if (teacherlist.isEmpty()) {
 
-        if (teacherList.isEmpty()) {
-            throw new ResourceNotFoundException("No doubts found for teacher ID: " + id);
+
+
+                    throw new ResourceNotFoundException("No doubts found for teacher ID: " + id);
+                }
+
+                return teacherlist.stream().map(DoubtMapper::mapToDoubtDto).toList();
+            }
+
+            @Override
+            public List<DoubtDto> studentdoubtlist (Long id){
+                List<Doubt> allDoubts = doubtRepository.findAll();
+
+                List<Doubt> studentList = allDoubts.stream()
+                        .filter(d -> d.getStudentID() != null && d.getStudentID().equals(id)).toList();
+
+                if (studentList.isEmpty()) {
+                    throw new ResourceNotFoundException("No doubts found for student ID: " + id);
+                }
+
+                return studentList.stream().map(DoubtMapper::mapToDoubtDto).toList();
+            }
+
+
         }
 
-        return teacherList.stream().map(DoubtMapper::mapToDoubtDto).toList();
-    }
 
-    @Override
-    public List<DoubtDto> studentdoubtlist(Long id) {
-        List<Doubt> allDoubts = doubtRepository.findAll();
-
-        List<Doubt> studentList = allDoubts.stream()
-                .filter(d -> d.getStudentID() != null && d.getStudentID().equals(id)).toList();
-
-        if (studentList.isEmpty()) {
-            throw new ResourceNotFoundException("No doubts found for student ID: " + id);
-        }
-
-        return studentList.stream().map(DoubtMapper::mapToDoubtDto).toList();
-    }
-
-
-}
