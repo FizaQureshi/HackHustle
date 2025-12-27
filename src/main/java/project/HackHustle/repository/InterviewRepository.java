@@ -6,5 +6,5 @@ import project.HackHustle.entity.Interview;
 import java.util.List;
 
 public interface InterviewRepository  extends JpaRepository<Interview,Long> {
-    List<Interview> findByStudentID(Long id);
+    List<Interview> findByStudentID(Long studentID);
 }

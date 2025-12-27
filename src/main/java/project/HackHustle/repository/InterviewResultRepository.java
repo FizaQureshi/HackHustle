@@ -7,5 +7,4 @@ import project.HackHustle.entity.InterviewResult;
 import java.util.List;
 
 public interface InterviewResultRepository  extends JpaRepository<InterviewResult,Long> {
-    List<Interview> findByStudentId(Long studentId);
 }
