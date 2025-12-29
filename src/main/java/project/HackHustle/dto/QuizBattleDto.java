@@ -15,7 +15,7 @@ public class QuizBattleDto
 {
     private Long quizID;
     private LocalDateTime date;
-    private Long studentID;
+    private Long studentId;
     private Long quizScore;
     private String status;
     private String subjectName;

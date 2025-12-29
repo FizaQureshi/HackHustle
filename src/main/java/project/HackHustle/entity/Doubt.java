@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 
@@ -26,6 +27,7 @@ public class Doubt
     private String  doubtStatus = "False";
 
     @Column(name = "date", nullable = false)
+    @CreationTimestamp
     private LocalDateTime date;
 
     @Column(name = "query_asked", nullable = false)

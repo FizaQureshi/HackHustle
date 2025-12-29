@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 
@@ -23,10 +24,12 @@ public class QuizBattle
     private Long quizID;
 
     @Column(name = "date", nullable = false)
+    @CreationTimestamp
     private LocalDateTime date;
 
-    @Column(name = "student_id", nullable = false)
-    private Long studentID;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "student_id", nullable = false)
+    private Student student;
 
     @Column(name = "quiz_score", nullable = false)
     private Long quizScore;
