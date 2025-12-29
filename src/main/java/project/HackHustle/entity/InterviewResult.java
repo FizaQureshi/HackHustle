@@ -50,6 +50,7 @@ public class InterviewResult
     @Column(name = "interview_score", nullable = false)
     private Long interviewScore;
 
-    @Column(name = "interview_id", nullable = false)
-    private Long interviewID;
+    @OneToOne
+    @JoinColumn(name = "interview_id", nullable = false)
+    private Interview interview;
 }

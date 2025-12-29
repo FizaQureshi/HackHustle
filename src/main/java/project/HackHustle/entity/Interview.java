@@ -25,6 +25,7 @@ public class Interview
     @Column(name = "date", nullable = false)
     private LocalDateTime date;
 
-    @Column(name = "student_id", nullable = false)
-    private Long studentID;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "student_id", nullable = false)
+    private Student student;
 }

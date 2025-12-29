@@ -8,7 +8,7 @@ import project.HackHustle.service.InterviewResultService;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("/api/iresult")
+@RequestMapping("/api/result")
 public class InterviewResultController {
 
     private final InterviewResultService interviewResultService;
@@ -21,7 +21,7 @@ public class InterviewResultController {
    }
 
    @GetMapping("/{id}")
-   public ResponseEntity<InterviewResultDto> getInterview(@PathVariable Long id)
+   public ResponseEntity<InterviewResultDto> getInterview(@PathVariable Long id) // this one is the interviewid
    {
        InterviewResultDto interviewResultDto = interviewResultService.getInterview(id);
        return ResponseEntity.ok(interviewResultDto);
