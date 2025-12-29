@@ -13,9 +13,6 @@ import project.HackHustle.service.InterviewService;
 
 import java.util.List;
 
-@Setter
-@Getter
-
 @AllArgsConstructor
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
@@ -29,9 +26,9 @@ public class InterviewController {
         interviewService.saveInterview(interviewDto);
         return ResponseEntity.ok().build();
     }
-    @GetMapping("/{id}")
-    public ResponseEntity<List<InterviewDto>> getInterviewsById(@PathVariable Long id) {
-        List<InterviewDto> interviews = interviewService.getAllInterview(id);
+    @GetMapping("/student/{studentId}")
+    public ResponseEntity<List<InterviewDto>> getInterviewsById(@PathVariable Long studentId) {
+        List<InterviewDto> interviews = interviewService.getAllInterview(studentId);
 
         if (interviews.isEmpty()) {
             return ResponseEntity.noContent().build(); // 204 if no interviews found

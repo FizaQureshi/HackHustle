@@ -11,5 +11,5 @@ import lombok.Setter;
 @AllArgsConstructor
 public class InterviewDto {
     private Long interviewID;
-    private Long studentID;
+    private Long studentId;
 }
