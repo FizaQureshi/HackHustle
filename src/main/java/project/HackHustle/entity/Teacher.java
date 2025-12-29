@@ -46,4 +46,8 @@ public class Teacher
 
     @Column(name = "institute", nullable = false)
     private String institute;
+    @PrePersist
+    public void prePersist() {
+        if (rating == null) rating = 0L;
+    }
 }
