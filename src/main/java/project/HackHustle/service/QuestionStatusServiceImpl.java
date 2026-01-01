@@ -11,12 +11,17 @@ import project.HackHustle.repository.QuestionStatusRepository;
 @Service
 public class QuestionStatusServiceImpl  implements QuestionStatusService{
 
-  QuestionStatusRepository questionStatusRepository;
+  private final QuestionStatusRepository questionStatusRepository;
+
+    public QuestionStatusServiceImpl(QuestionStatusRepository questionStatusRepository) {
+        this.questionStatusRepository = questionStatusRepository;
+    }
 
     @Override
-    public void saveStatus(QuestionStatusDto questionStatusDto) {
+    public boolean saveStatus(QuestionStatusDto questionStatusDto) {
 
         QuestionStatus questionStatus = QuestionStatusMapper.maptoQuestionStatus(questionStatusDto);
        QuestionStatus saved =  questionStatusRepository.save(questionStatus);
+       return saved != null;
     }
 }
