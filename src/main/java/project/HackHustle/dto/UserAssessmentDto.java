@@ -11,13 +11,17 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class QuizBattleDto
-{
-    private Long quizID;
+public class UserAssessmentDto {
+
+    private Long assessmentID;
+
     private LocalDateTime date;
-    private Long studentId;
-    private Long quizScore;
-    private String status;
-    private String subjectName;
-    private Long battleId;
+
+    private Long studentID;      // send just the ID to frontend
+
+    private Long topicID;
+
+    private Long subjectID;
+
+    private Long assessmentScore;
 }

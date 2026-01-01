@@ -4,8 +4,10 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import project.HackHustle.dto.QuizBattleDto;
 import project.HackHustle.entity.QuizBattle;
+import project.HackHustle.entity.Student;
 import project.HackHustle.mapper.QuizBattleMapper;
 import project.HackHustle.repository.QuizBattleRepository;
+import project.HackHustle.repository.StudentRepository;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -15,15 +17,14 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class QuizBattleServiceImpl implements QuizBattleService {
 
-    private  QuizBattleRepository quizBattleRepository;
+    private final QuizBattleRepository quizBattleRepository;
+    private final StudentRepository studentRepository;
 
     @Override
-    public QuizBattleDto saveQuizBattle(QuizBattleDto quizBattleDTO)
-    {
-        // Map DTO to Entity
-        QuizBattle quizBattle = QuizBattleMapper.mapToQuizBattle(quizBattleDTO);
+    public QuizBattleDto saveQuizBattle(QuizBattleDto quizBattleDTO) {
 
-        // BACKEND LOGIC: set current date & time
+        QuizBattle quizBattle = QuizBattleMapper.mapToQuizBattle(quizBattleDTO, studentRepository);
+
         quizBattle.setDate(LocalDateTime.now());
 
         QuizBattle savedQuizBattle = quizBattleRepository.save(quizBattle);
@@ -31,18 +32,15 @@ public class QuizBattleServiceImpl implements QuizBattleService {
         return QuizBattleMapper.mapToQuizBattleDto(savedQuizBattle);
     }
 
-
     @Override
-    public void deleteQuizBattle(Long quizID)
-    {
+    public void deleteQuizBattle(Long quizID) {
         quizBattleRepository.deleteById(quizID);
     }
 
     @Override
-    public List<QuizBattleDto> getQuizBattlesByStudent(Long studentID)
-    {
-        List<QuizBattle> battles =
-                quizBattleRepository.findByStudentID(studentID);
+    public List<QuizBattleDto> getQuizBattlesByStudent(Long studentID) {
+
+        List<QuizBattle> battles = quizBattleRepository.findByStudent_StudentId(studentID);
 
         return battles.stream()
                 .map(QuizBattleMapper::mapToQuizBattleDto)
@@ -50,14 +48,11 @@ public class QuizBattleServiceImpl implements QuizBattleService {
     }
 
     @Override
-    public List<QuizBattleDto> getQuizBattlesByBattleId(Long battleId)
-    {
-        List<QuizBattle> battles =
-                quizBattleRepository.findByBattleId(battleId);
+    public List<QuizBattleDto> getQuizBattlesByBattleId(Long battleId) {
+        List<QuizBattle> battles = quizBattleRepository.findByBattleId(battleId);
 
         return battles.stream()
                 .map(QuizBattleMapper::mapToQuizBattleDto)
                 .collect(Collectors.toList());
     }
 }
-
