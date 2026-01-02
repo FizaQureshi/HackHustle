@@ -22,7 +22,7 @@ public class QuestionStatusKey implements Serializable
     private Long questionID;
 
     @Column(name = "student_id", nullable = false)
-    private Long studentID;
+    private Long studentId;
 
     @Override
     public boolean equals(Object obj)
@@ -32,12 +32,12 @@ public class QuestionStatusKey implements Serializable
         if (!(obj instanceof QuestionStatusKey))
             return false;
         QuestionStatusKey qsk = (QuestionStatusKey) obj;
-        return questionID.equals(qsk.questionID) && studentID.equals(qsk.studentID);
+        return questionID.equals(qsk.questionID) && studentId.equals(qsk.studentId);
     }
 
     @Override
     public int hashCode()
     {
-        return java.util.Objects.hash(questionID, studentID);
+        return java.util.Objects.hash(questionID, studentId);
     }
 }

@@ -38,6 +38,7 @@ public class Question
     @Column(name = "correct_answer", nullable = false)
     private String correctAnswer;
 
-    @Column(name = "topic_id", nullable = false)
-    private Long topicID;
+    @ManyToOne
+    @JoinColumn(name = "topic_id", nullable = false)
+    private Topic topic;
 }

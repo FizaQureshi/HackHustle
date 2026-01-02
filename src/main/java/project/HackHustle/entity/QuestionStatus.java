@@ -16,7 +16,17 @@ import lombok.Setter;
 public class QuestionStatus
 {
     @EmbeddedId
-    private QuestionStatusKey id;
+    private QuestionStatusKey id = new QuestionStatusKey();
+
+    @MapsId("questionID")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "question_id")
+    private Question question;
+
+    @MapsId("studentId")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "student_id")
+    private Student student;
 
     @Column(name = "question_status", nullable = false, columnDefinition = "varchar(255) default 'False'")
     private String status;

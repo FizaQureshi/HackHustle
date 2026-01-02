@@ -1,7 +1,28 @@
 package project.HackHustle.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import project.HackHustle.entity.Question;
 
+import java.util.List;
+
 public interface QuestionRepository  extends JpaRepository<Question,Long> {
+    List<Question> findByTopic_TopicName(String topicName);
+
+    List<Question> findByTopic_Subject_SubjectID(Long subjectID);
+
+    @Query(
+            value = """
+        SELECT q.*
+        FROM question q
+        JOIN topic t ON q.topic_id = t.topic_id
+        WHERE t.subject_id = :subjectId
+        ORDER BY RAND()
+        LIMIT 20
+        """,
+            nativeQuery = true
+    )
+    List<Question> findRandom20BySubject(@Param("subjectId") Long subjectId);
+
 }
