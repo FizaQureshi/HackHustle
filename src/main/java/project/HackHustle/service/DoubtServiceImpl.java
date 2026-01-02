@@ -19,18 +19,17 @@ public class DoubtServiceImpl implements DoubtService {
 
 
     @Override
-    public DoubtDto saveDoubt(DoubtDto doubtDto) {
-
+    public DoubtDto saveDoubt(DoubtDto doubtDto)
+    {
         Doubt doubt = DoubtMapper.mapToDoubt(doubtDto);
         Doubt savedDoubt = doubtRepository.save(doubt);
 
         return DoubtMapper.mapToDoubtDto(savedDoubt);
-
-
     }
 
     @Override
-    public DoubtDto updateDoubt(DoubtDto doubtDto) {
+    public DoubtDto updateDoubt(DoubtDto doubtDto)
+    {
         Doubt doubt = doubtRepository.findById(doubtDto.getDoubtID()).orElseThrow(
                 () -> new ResourceNotFoundException("Student does not exist with given id " + doubtDto.getDoubtID()));
 
@@ -41,49 +40,43 @@ public class DoubtServiceImpl implements DoubtService {
         return DoubtMapper.mapToDoubtDto(doubt);
     }
 
-    @Override
-    public void deleteDoubt() {
-        List<Doubt> alldoubts = doubtRepository.findAll();
-        List<Doubt> resolved = alldoubts.stream().filter(d -> d.getDoubtStatus().equalsIgnoreCase("resolved"))
-                .toList();
 
-        doubtRepository.deleteAll(resolved);
+    @Override
+    public void deleteDoubt(Long doubtID)
+    {
+        Doubt doubt = doubtRepository.findById(doubtID)
+                .orElseThrow(() -> new ResourceNotFoundException("Doubt not found with ID: " + doubtID));
+
+        doubtRepository.delete(doubt);
     }
 
     @Override
-
-    public List<DoubtDto> teacherdoubtlist(Long id) {
-        List<Doubt> alldoubts = doubtRepository.findAll();
-        //List<Doubt> teacherlist = alldoubts.stream().filter(d->d.getTeacherID().equals(id).toList());
-        List<Doubt> teacherlist = alldoubts.stream()
-                .filter(d -> d.getTeacherID().equals(id))
+    public List<DoubtDto> teacherDoubtList(Long teacherID)
+    {
+        List<Doubt> teacherList = doubtRepository.findAll().stream()
+                .filter(d -> d.getTeacher() != null && d.getTeacher().getTeacherID().equals(teacherID))
                 .toList();
 
-        if (teacherlist.isEmpty()) {
-
-
-
-                    throw new ResourceNotFoundException("No doubts found for teacher ID: " + id);
-                }
-
-                return teacherlist.stream().map(DoubtMapper::mapToDoubtDto).toList();
-            }
-
-            @Override
-            public List<DoubtDto> studentdoubtlist (Long id){
-                List<Doubt> allDoubts = doubtRepository.findAll();
-
-                List<Doubt> studentList = allDoubts.stream()
-                        .filter(d -> d.getStudentID() != null && d.getStudentID().equals(id)).toList();
-
-                if (studentList.isEmpty()) {
-                    throw new ResourceNotFoundException("No doubts found for student ID: " + id);
-                }
-
-                return studentList.stream().map(DoubtMapper::mapToDoubtDto).toList();
-            }
-
-
+        if (teacherList.isEmpty())
+        {
+                throw new ResourceNotFoundException("No doubts found for teacher ID: " + teacherID);
         }
+
+        return teacherList.stream().map(DoubtMapper::mapToDoubtDto).toList();
+    }
+
+    @Override
+    public List<DoubtDto> studentDoubtList(Long studentId)
+    {
+        List<Doubt> studentList = doubtRepository.findByStudent_StudentId(studentId);
+
+        if (studentList.isEmpty())
+        {
+            throw new ResourceNotFoundException("No doubts found for student ID: " + studentId);
+        }
+        return studentList.stream().map(DoubtMapper::mapToDoubtDto).toList();
+    }
+
+}
 
 

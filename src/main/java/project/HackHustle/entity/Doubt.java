@@ -24,7 +24,7 @@ public class Doubt
     private Long doubtID;
 
     @Column(name = "doubt_status", nullable = false)
-    private String  doubtStatus = "False";
+    private String  doubtStatus = "Pending";
 
     @Column(name = "date", nullable = false)
     @CreationTimestamp
@@ -36,12 +36,25 @@ public class Doubt
     @Column(name = "answer_provided", nullable = false)
     private String answerProvided;
 
-    @Column(name = "student_id", nullable = false)
-    private Long studentID;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "student_id", nullable = false)
+    private Student student;
 
-    @Column(name = "question_id", nullable = false)
-    private Long questionID;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "question_id", nullable = false)
+    private Question question;
 
-    @Column(name = "teacher_id", nullable = false)
-    private Long teacherID;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "teacher_id", nullable = false)
+    private Teacher teacher;
+
+    @PrePersist
+    public void prePersist()
+    {
+        if (doubtStatus == null)
+            doubtStatus = "Pending";
+
+        if(answerProvided == null)
+            answerProvided = "None";
+    }
 }
