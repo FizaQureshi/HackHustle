@@ -33,19 +33,19 @@ public class QuizBattleController {
         return new ResponseEntity<>(battles, HttpStatus.OK);
     }
 
-    //http://localhost:8080/api/quiz-battles/battle/1001
+    //http://localhost:8080/api/quiz-battles/battle/Cad23S
     @GetMapping("/battle/{battleId}")
-    public ResponseEntity<List<QuizBattleDto>> getQuizBattlesByBattleId(@PathVariable("battleId") Long battleId)
+    public ResponseEntity<List<QuizBattleDto>> getQuizBattlesByBattleId(@PathVariable("battleId") String battleId)
     {
         List<QuizBattleDto> battles = quizBattleService.getQuizBattlesByBattleId(battleId);
         return new ResponseEntity<>(battles, HttpStatus.OK);
     }
 
     //http://localhost:8080/api/quiz-battles/quiz/1001
-    @DeleteMapping("/quiz/{quizId}")
-    public ResponseEntity<String> deleteQuizBattle(@PathVariable("quizId") Long quizId)
+    @DeleteMapping("/quiz/{quizID}")
+    public ResponseEntity<String> deleteQuizBattle(@PathVariable("quizID") Long quizID)
     {
-        quizBattleService.deleteQuizBattle(quizId);
+        quizBattleService.deleteQuizBattle(quizID);
         return ResponseEntity.ok("QuizBattle deleted successfully");
     }
 }

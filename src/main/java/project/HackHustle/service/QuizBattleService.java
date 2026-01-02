@@ -10,7 +10,7 @@ public interface QuizBattleService {
 
     void deleteQuizBattle(Long quizID);
 
-    List<QuizBattleDto> getQuizBattlesByStudent(Long studentID);
+    List<QuizBattleDto> getQuizBattlesByStudent(Long studentId);
 
-    List<QuizBattleDto> getQuizBattlesByBattleId(Long battleId);
+    List<QuizBattleDto> getQuizBattlesByBattleId(String battleId);
 }
