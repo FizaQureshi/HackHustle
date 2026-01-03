@@ -13,53 +13,58 @@ import java.util.List;
 @AllArgsConstructor
 @RestController
 @RequestMapping("/api/doubts")
-public class DoubtController {
+public class DoubtController
+{
 
-  private DoubtService doubtService;
+      private DoubtService doubtService;
 
-  //saving the doubt
-  @PostMapping
-    public ResponseEntity<DoubtDto> createDoubt(@RequestBody  DoubtDto doubtDto)
-  {
-      DoubtDto saveddoubt = doubtService.saveDoubt(doubtDto);
-      return new ResponseEntity<>(saveddoubt, HttpStatus.CREATED);
-  }
-
-  //updating the doubt
-    @PutMapping("update")
-   public ResponseEntity<DoubtDto> updateDoubt( @RequestBody DoubtDto  doubtDto)
-    {
-       DoubtDto updateDoubt = doubtService.updateDoubt(doubtDto);
-       return new ResponseEntity<>(updateDoubt,HttpStatus.ACCEPTED);
-    }
-
-    @GetMapping("teacher/{id}")
-  public ResponseEntity<?> teacherdoubtlist(@PathVariable Long id)
-    {
-        List<DoubtDto> list = doubtService.teacherdoubtlist(id);
-        if (list.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body("No doubts found for teacher ID " + id);
-        }
-        return ResponseEntity.ok(list);
-    }
-    @GetMapping("student/{id}")
-    public ResponseEntity<?> studentdoubtlist(@PathVariable Long id)
-    {
-        List<DoubtDto> list = doubtService.studentdoubtlist(id);
-        if (list.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body("No doubts found for student ID " + id);
-        }
-        return ResponseEntity.ok(list);
-    }
-
-    //get permission for schedule cleanup from fiza
-  @DeleteMapping
-      public ResponseEntity<String> deleteDoubt()
+      //http://localhost:8080/api/doubts
+      @PostMapping
+        public ResponseEntity<DoubtDto> createDoubt(@RequestBody  DoubtDto doubtDto)
       {
-          doubtService.deleteDoubt();
-          return ResponseEntity.ok("resolved doubts  deleted successfully");
+          DoubtDto savedDoubt = doubtService.saveDoubt(doubtDto);
+          return new ResponseEntity<>(savedDoubt, HttpStatus.CREATED);
       }
+
+      //http://localhost:8080/api/doubts/update
+      @PutMapping("/update")
+       public ResponseEntity<DoubtDto> updateDoubt( @RequestBody DoubtDto  doubtDto)
+        {
+           DoubtDto updateDoubt = doubtService.updateDoubt(doubtDto);
+           return new ResponseEntity<>(updateDoubt,HttpStatus.ACCEPTED);
+        }
+
+        //http://localhost:8080/api/doubts/teacher/1001
+        @GetMapping("/teacher/{id}")
+         public ResponseEntity<?> teacherDoubtList(@PathVariable("id") Long teacherID)
+        {
+            List<DoubtDto> list = doubtService.teacherDoubtList(teacherID);
+            if (list.isEmpty()) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                        .body("No doubts found for teacher ID " + teacherID);
+            }
+            return ResponseEntity.ok(list);
+        }
+
+        //http://localhost:8080/api/doubts/student/1001
+        @GetMapping("/student/{id}")
+        public ResponseEntity<?> studentDoubtList(@PathVariable("id") Long studentId)
+        {
+            List<DoubtDto> list = doubtService.studentDoubtList(studentId);
+            if (list.isEmpty()) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                        .body("No doubts found for student ID " + studentId);
+            }
+            return ResponseEntity.ok(list);
+        }
+
+        //http://localhost:8080/api/doubts/1001
+        @DeleteMapping("{id}")
+        public ResponseEntity<String> deleteDoubt(@PathVariable("id") Long doubtID)
+        {
+            doubtService.deleteDoubt(doubtID);
+            return ResponseEntity.ok("Doubt with ID " + doubtID + " deleted successfully");
+        }
+
 
 }

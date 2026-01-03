@@ -8,6 +8,7 @@ import project.HackHustle.entity.Student;
 import project.HackHustle.mapper.QuizBattleMapper;
 import project.HackHustle.repository.QuizBattleRepository;
 import project.HackHustle.repository.StudentRepository;
+import project.HackHustle.repository.SubjectRepository;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -19,13 +20,14 @@ public class QuizBattleServiceImpl implements QuizBattleService {
 
     private final QuizBattleRepository quizBattleRepository;
     private final StudentRepository studentRepository;
+    private final SubjectRepository subjectRepository;
 
     @Override
     public QuizBattleDto saveQuizBattle(QuizBattleDto quizBattleDTO) {
 
-        QuizBattle quizBattle = QuizBattleMapper.mapToQuizBattle(quizBattleDTO, studentRepository);
+        QuizBattle quizBattle = QuizBattleMapper.mapToQuizBattle(quizBattleDTO, studentRepository, subjectRepository);
 
-        quizBattle.setDate(LocalDateTime.now());
+        //quizBattle.setDate(LocalDateTime.now());
 
         QuizBattle savedQuizBattle = quizBattleRepository.save(quizBattle);
 
@@ -38,9 +40,9 @@ public class QuizBattleServiceImpl implements QuizBattleService {
     }
 
     @Override
-    public List<QuizBattleDto> getQuizBattlesByStudent(Long studentID) {
+    public List<QuizBattleDto> getQuizBattlesByStudent(Long studentId) {
 
-        List<QuizBattle> battles = quizBattleRepository.findByStudent_StudentId(studentID);
+        List<QuizBattle> battles = quizBattleRepository.findByStudent_StudentId(studentId);
 
         return battles.stream()
                 .map(QuizBattleMapper::mapToQuizBattleDto)
@@ -48,7 +50,7 @@ public class QuizBattleServiceImpl implements QuizBattleService {
     }
 
     @Override
-    public List<QuizBattleDto> getQuizBattlesByBattleId(Long battleId) {
+    public List<QuizBattleDto> getQuizBattlesByBattleId(String battleId) {
         List<QuizBattle> battles = quizBattleRepository.findByBattleId(battleId);
 
         return battles.stream()

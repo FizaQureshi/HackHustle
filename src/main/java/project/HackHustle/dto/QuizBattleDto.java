@@ -18,6 +18,6 @@ public class QuizBattleDto
     private Long studentId;
     private Long quizScore;
     private String status;
-    private String subjectName;
-    private Long battleId;
+    private Long subjectId;
+    private String battleId;
 }

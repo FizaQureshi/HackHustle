@@ -10,9 +10,9 @@ public interface DoubtService {
 
     DoubtDto updateDoubt(DoubtDto doubtDto);
 
-    void deleteDoubt();
+    void deleteDoubt(Long doubtID);
 
-    List<DoubtDto> teacherdoubtlist(Long id);
+    List<DoubtDto> teacherDoubtList(Long teacherID);
 
-    List<DoubtDto> studentdoubtlist(Long id);
+    List<DoubtDto> studentDoubtList(Long studentId);
 }

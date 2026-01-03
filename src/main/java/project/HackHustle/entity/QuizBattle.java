@@ -37,9 +37,10 @@ public class QuizBattle
     @Column(name = "quiz_status", nullable = false)
     private String status;
 
-    @Column(name = "subject_name", nullable = false)
-    private String subjectName;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "subject_id", nullable = false)
+    private Subject subject;
 
     @Column(name = "battle_id", nullable = false)
-    private Long battleId;
+    private String battleId;
 }
