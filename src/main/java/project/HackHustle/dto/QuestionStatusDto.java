@@ -14,6 +14,6 @@ import java.io.Serializable;
 public class QuestionStatusDto implements Serializable  {
 
     private Long questionID;
-    private Long studentID;
+    private String emailId;
 
 }

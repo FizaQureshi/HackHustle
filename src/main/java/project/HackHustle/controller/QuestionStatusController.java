@@ -15,29 +15,48 @@ import project.HackHustle.service.QuestionStatusService;
 
 @AllArgsConstructor
 @CrossOrigin(origins = "http://localhost:3000")
+//@RestController
+//@RequestMapping("/api/questionstatus")
+//public class QuestionStatusController {
+//
+//    private final QuestionStatusService questionStatusService;
+//    private final QuestionStatusRepository questionStatusRepository;
+//    private final QuestionRepository questionRepository;
+//    private final StudentRepository studentRepository;
+//
+//    @PostMapping
+//    public ResponseEntity<Void> saveStatus(@RequestBody QuestionStatusKey key) {
+//        Student student = studentRepository.findById(key.getStudentId())
+//                .orElseThrow(() -> new RuntimeException("Student not found"));
+//        Question question = questionRepository.findById(key.getQuestionID())
+//                .orElseThrow(() -> new RuntimeException("Question not found"));
+//
+//        QuestionStatus qs = new QuestionStatus();
+//        qs.setId(key);
+//        qs.setStudent(student);
+//        qs.setQuestion(question);
+//        qs.setStatus("true");
+//
+//        questionStatusRepository.save(qs);
+//        return ResponseEntity.ok().build();
+//    }
+//}
 @RestController
 @RequestMapping("/api/questionstatus")
+
 public class QuestionStatusController {
 
     private final QuestionStatusService questionStatusService;
-    private final QuestionStatusRepository questionStatusRepository;
-    private final QuestionRepository questionRepository;
-    private final StudentRepository studentRepository;
 
     @PostMapping
-    public ResponseEntity<Void> saveStatus(@RequestBody QuestionStatusKey key) {
-        Student student = studentRepository.findById(key.getStudentId())
-                .orElseThrow(() -> new RuntimeException("Student not found"));
-        Question question = questionRepository.findById(key.getQuestionID())
-                .orElseThrow(() -> new RuntimeException("Question not found"));
+    public ResponseEntity<String> saveStatus(@RequestBody QuestionStatusDto dto) {
+        boolean saved = questionStatusService.saveStatus(dto);
+        if(saved)
+        {
+            return ResponseEntity.ok("success");
 
-        QuestionStatus qs = new QuestionStatus();
-        qs.setId(key);
-        qs.setStudent(student);
-        qs.setQuestion(question);
-        qs.setStatus("true");
-
-        questionStatusRepository.save(qs);
-        return ResponseEntity.ok().build();
-    }
+        }
+        else{
+        return ResponseEntity.status(500).body("failed");
+    }}
 }
