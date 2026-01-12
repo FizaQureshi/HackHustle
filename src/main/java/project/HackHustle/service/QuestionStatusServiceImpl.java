@@ -12,6 +12,8 @@ import project.HackHustle.repository.QuestionRepository;
 import project.HackHustle.repository.QuestionStatusRepository;
 import project.HackHustle.repository.StudentRepository;
 
+import java.util.List;
+
 //
 //@Service
 //public class QuestionStatusServiceImpl  implements QuestionStatusService{
@@ -64,6 +66,14 @@ public class QuestionStatusServiceImpl implements QuestionStatusService {
 
         questionStatusRepository.save(status);
         return true;
+    }
+
+    @Override
+    public List<Long> getListVisited(String emailId) {
+        Student student = studentRepository.findByEmailId(emailId)
+                .orElseThrow(() -> new RuntimeException("Student not found with email"));
+        return questionStatusRepository.findQuestionIdsByStudentId(student.getStudentId());
+
     }
 }
 
