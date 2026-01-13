@@ -9,9 +9,9 @@ import project.HackHustle.entity.Student;
 import project.HackHustle.entity.Subject;
 import project.HackHustle.entity.Topic;
 import project.HackHustle.service.UserAssessmentService;
-
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/api/assessments")
 @RequiredArgsConstructor
