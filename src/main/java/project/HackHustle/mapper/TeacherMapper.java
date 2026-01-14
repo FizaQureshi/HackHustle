@@ -15,7 +15,11 @@ public class TeacherMapper
                 teacher.getPassword(),
                 teacher.getRating(),
                 teacher.getSubjectAssociated(),
-                teacher.getInstitute()
+                teacher.getInstitute(),
+                teacher.getDepartment(),
+                teacher.getDesignation(),
+                teacher.getExperience(),
+                teacher.getContact()
         );
     }
 
@@ -29,7 +33,11 @@ public class TeacherMapper
                 teacherDto.getPassword(),
                 teacherDto.getRating(),
                 teacherDto.getSubjectAssociated(),
-                teacherDto.getInstitute()
+                teacherDto.getInstitute(),
+                teacherDto.getDepartment(),
+                teacherDto.getDesignation(),
+                teacherDto.getExperience(),
+                teacherDto.getContact()
         );
     }
 }

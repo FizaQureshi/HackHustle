@@ -6,9 +6,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import project.HackHustle.dto.QuestionDto;
-import project.HackHustle.repository.QuestionRepository;
 import project.HackHustle.service.QuestionService;
-
 import java.util.List;
 
 @RestController

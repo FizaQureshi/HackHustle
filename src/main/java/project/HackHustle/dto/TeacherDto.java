@@ -19,4 +19,8 @@ public class TeacherDto
     private Long rating;
     private String subjectAssociated;
     private String institute;
+    private String department;
+    private String designation;
+    private String experience;
+    private String contact;
 }
