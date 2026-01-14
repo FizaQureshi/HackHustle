@@ -47,7 +47,7 @@ public class UserAssessment {
     //100 means no topic  it means it is a subjective assesment
     @PrePersist
     public void prePersist() {
-        if (topic.getTopicID() == null) topic.setTopicID(100L);
+        if (topic.getTopicID() == 1015) topic.setTopicID(1015L);
 
     }
 }
