@@ -31,8 +31,8 @@ public class UserAssessmentServiceImpl implements UserAssessmentService {
 
     @Override
     public UserAssessmentDto createAssessment(UserAssessmentDto dto) {
-        Student student = studentRepository.findById(dto.getStudentID())
-                .orElseThrow(() -> new ResourceNotFoundException("Student not found with ID " + dto.getStudentID()));
+        Student student = studentRepository.findByEmailId(dto.getEmailId())
+                .orElseThrow(() -> new ResourceNotFoundException("Student not found with email Id " + dto.getEmailId()));
         Topic topic = null;
         if (dto.getTopicID() != null) {
             topic = topicRepository.findById(dto.getTopicID())

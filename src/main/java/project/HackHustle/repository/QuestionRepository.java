@@ -8,6 +8,18 @@ import project.HackHustle.entity.Question;
 import java.util.List;
 
 public interface QuestionRepository  extends JpaRepository<Question,Long> {
+    @Query(
+            value = """
+        SELECT q.*
+        FROM question q
+        JOIN topic t ON q.topic_id = t.topic_id
+        WHERE t.topic_name = :topicName
+        ORDER BY RAND()
+        LIMIT 20
+        """,
+            nativeQuery = true
+    )
+List<Question> findRandom20ByTopic(@Param("topicName") String TopicName);
     List<Question> findByTopic_TopicName(String topicName);
 
     List<Question> findByTopic_Subject_SubjectID(Long subjectID);
