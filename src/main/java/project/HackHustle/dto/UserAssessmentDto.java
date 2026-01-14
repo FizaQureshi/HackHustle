@@ -17,7 +17,7 @@ public class UserAssessmentDto {
 
     private LocalDateTime date;
 
-    private Long studentID;      // send just the ID to frontend
+    private String emailId;      // send just the ID to frontend
 
     private Long topicID;
 

@@ -25,6 +25,15 @@ public class QuestionServiceImpl implements QuestionService{
                 .map(QuestionMapper::mapToQuestionDto)
                 .collect(Collectors.toList());
     }
+    @Override
+    public List<QuestionDto> getQuestionByTopicAssesment(String topicName) {
+        List<Question> questions =
+                questionRepository.findRandom20ByTopic(topicName);
+
+        return questions.stream()
+                .map(QuestionMapper::mapToQuestionDto)
+                .collect(Collectors.toList());
+    }
 
     @Override
     public List<QuestionDto> getQuestionBySubject(Long subjectID) {

@@ -44,4 +44,10 @@ public class UserAssessment {
 
     @Column(name = "assessment_score", nullable = false)
     private Long assessmentScore;
+    //100 means no topic  it means it is a subjective assesment
+    @PrePersist
+    public void prePersist() {
+        if (topic.getTopicID() == null) topic.setTopicID(100L);
+
+    }
 }

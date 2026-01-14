@@ -31,6 +31,16 @@ public class QuestionController {
         }
         return ResponseEntity.ok(list);
     }
+    @GetMapping("/topicassesment/{topicName}")
+    public ResponseEntity<List<QuestionDto>>  getQuestionByTopicAssesment(@PathVariable String topicName)
+    {
+        List<QuestionDto> list = questionService.getQuestionByTopicAssesment(topicName);
+        //if with this topic there exist no questions
+        if (list.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(list);
+    }
     @GetMapping("/subject/{subjectID}")
     public ResponseEntity<List<QuestionDto>>  getQuestionBySubject (@PathVariable Long subjectID)
     {

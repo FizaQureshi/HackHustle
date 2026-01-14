@@ -16,7 +16,7 @@ public class UserAssessmentMapper {
         UserAssessmentDto dto = new UserAssessmentDto();
         dto.setAssessmentID(userAssessment.getAssessmentID());
         dto.setDate(userAssessment.getDate());
-        dto.setStudentID(userAssessment.getStudent().getStudentId());
+        dto.setEmailId(userAssessment.getStudent().getEmailId());
         dto.setTopicID(userAssessment.getTopic() != null ? userAssessment.getTopic().getTopicID() : null);
         dto.setSubjectID(userAssessment.getSubject().getSubjectID());
         dto.setAssessmentScore(userAssessment.getAssessmentScore());
