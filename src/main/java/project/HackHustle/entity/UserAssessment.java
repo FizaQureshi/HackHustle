@@ -33,7 +33,7 @@ public class UserAssessment {
 
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "topic_id", nullable = true)
+    @JoinColumn(name = "topic_id", nullable = false)
     private Topic topic;
 
 
@@ -44,10 +44,10 @@ public class UserAssessment {
 
     @Column(name = "assessment_score", nullable = false)
     private Long assessmentScore;
-    //100 means no topic  it means it is a subjective assesment
+    //1019 means no topic  it means it is a subject wise assessment
     @PrePersist
     public void prePersist() {
-        if (topic.getTopicID() == null) topic.setTopicID(100L);
+        if (topic.getTopicID() == 1019) topic.setTopicID(1019L);
 
     }
 }
