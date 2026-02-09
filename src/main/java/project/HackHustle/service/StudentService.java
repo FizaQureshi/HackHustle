@@ -8,7 +8,7 @@ public interface StudentService
 {
     StudentDto createStudent(StudentDto studentDto);
 
-    StudentDto getStudentById(Long studentId);
+    StudentDto getStudentById(String studentId);
 
     List<StudentDto> getAllStudents();
 
