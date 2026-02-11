@@ -29,23 +29,54 @@ public class UserAssessmentServiceImpl implements UserAssessmentService {
     private final TopicRepository topicRepository;
     private final SubjectRepository subjectRepository;
 
-    @Override
-    public UserAssessmentDto createAssessment(UserAssessmentDto dto) {
-        Student student = studentRepository.findByEmailId(dto.getEmailId())
-                .orElseThrow(() -> new ResourceNotFoundException("Student not found with email Id " + dto.getEmailId()));
-        Topic topic = null;
-        if (dto.getTopicID() != null) {
-            topic = topicRepository.findById(dto.getTopicID())
-                    .orElseThrow(() -> new ResourceNotFoundException("Topic not found with ID " + dto.getTopicID()));
-        }
-        Subject subject = subjectRepository.findById(dto.getSubjectID())
-                .orElseThrow(() -> new ResourceNotFoundException("Subject not found with ID " + dto.getSubjectID()));
+//    @Override
+//    public UserAssessmentDto createAssessment(UserAssessmentDto dto) {
+//        Student student = studentRepository.findByEmailId(dto.getEmailId())
+//                .orElseThrow(() -> new ResourceNotFoundException("Student not found with email Id " + dto.getEmailId()));
+//        Topic topic = null;
+//        if (dto.getTopicID() != null) {
+//            topic = topicRepository.findById(dto.getTopicID())
+//                    .orElseThrow(() -> new ResourceNotFoundException("Topic not found with ID " + dto.getTopicID()));
+//        }
+//        Subject subject = subjectRepository.findById(dto.getSubjectID())
+//                .orElseThrow(() -> new ResourceNotFoundException("Subject not found with ID " + dto.getSubjectID()));
+//
+//        UserAssessment assessment = UserAssessmentMapper.mapToUserAssessment(dto, student, topic, subject);
+//
+//        UserAssessment saved = userAssessmentRepository.save(assessment);
+//        return UserAssessmentMapper.mapToUserAssessmentDto(saved);
+//    }
+@Override
+public UserAssessmentDto createAssessment(UserAssessmentDto dto) {
 
-        UserAssessment assessment = UserAssessmentMapper.mapToUserAssessment(dto, student, topic, subject);
+    Student student = studentRepository.findByEmailId(dto.getEmailId())
+            .orElseThrow(() -> new ResourceNotFoundException(
+                    "Student not found with email Id " + dto.getEmailId()));
 
-        UserAssessment saved = userAssessmentRepository.save(assessment);
-        return UserAssessmentMapper.mapToUserAssessmentDto(saved);
+    Subject subject = subjectRepository.findById(dto.getSubjectID())
+            .orElseThrow(() -> new ResourceNotFoundException(
+                    "Subject not found with ID " + dto.getSubjectID()));
+
+    Topic topic = null;
+
+    // Only fetch topic if it is NOT null
+    if (dto.getTopicID() != null) {
+        topic = topicRepository.findById(dto.getTopicID())
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        "Topic not found with ID " + dto.getTopicID()));
     }
+
+    UserAssessment assessment = new UserAssessment();
+    assessment.setStudent(student);
+    assessment.setSubject(subject);
+    assessment.setTopic(topic);   // will be null for subject-wise
+    assessment.setAssessmentScore(dto.getAssessmentScore());
+
+    UserAssessment saved = userAssessmentRepository.save(assessment);
+
+    return UserAssessmentMapper.mapToUserAssessmentDto(saved);
+}
+
 
     @Override
     public List<UserAssessmentDto> getAllAssessments() {
