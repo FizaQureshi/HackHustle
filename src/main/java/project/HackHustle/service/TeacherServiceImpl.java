@@ -85,4 +85,12 @@ public class TeacherServiceImpl implements TeacherService
 
         // Successful login — do nothing, just return
     }
+
+    @Override
+    public TeacherDto getTeacherByEmail(String email) {
+        Teacher teacher = teacherRepository.findByEmailId(email)
+                .orElseThrow(() -> new ResourceNotFoundException("Teacher not found with email: " + email));
+
+        return TeacherMapper.mapToTeacherDto(teacher);
+    }
 }
