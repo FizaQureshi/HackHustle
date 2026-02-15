@@ -53,7 +53,7 @@ public class Teacher
     @Column(name = "experience", nullable = false)
     private String experience;
 
-//hello testing
+
     @PrePersist
     public void prePersist()
     {
