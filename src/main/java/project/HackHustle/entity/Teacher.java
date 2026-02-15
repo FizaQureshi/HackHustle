@@ -53,9 +53,6 @@ public class Teacher
     @Column(name = "experience", nullable = false)
     private String experience;
 
-    @Column(name = "contact", nullable = false)
-    private String contact;
-
     @PrePersist
     public void prePersist()
     {
@@ -63,6 +60,6 @@ public class Teacher
         if(designation == null) designation = "N/A";
         if(department == null) department = "N/A";
         if(experience == null) experience = "N/A";
-        if(contact == null) contact = "N/A";
+
     }
 }

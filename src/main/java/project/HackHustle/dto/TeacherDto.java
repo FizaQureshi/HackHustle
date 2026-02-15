@@ -22,5 +22,5 @@ public class TeacherDto
     private String department;
     private String designation;
     private String experience;
-    private String contact;
+
 }

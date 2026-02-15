@@ -18,8 +18,7 @@ public class TeacherMapper
                 teacher.getInstitute(),
                 teacher.getDepartment(),
                 teacher.getDesignation(),
-                teacher.getExperience(),
-                teacher.getContact()
+                teacher.getExperience()
         );
     }
 
@@ -36,8 +35,8 @@ public class TeacherMapper
                 teacherDto.getInstitute(),
                 teacherDto.getDepartment(),
                 teacherDto.getDesignation(),
-                teacherDto.getExperience(),
-                teacherDto.getContact()
+                teacherDto.getExperience()
+
         );
     }
 }

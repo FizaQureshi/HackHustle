@@ -56,7 +56,7 @@ public class TeacherServiceImpl implements TeacherService
         teacher.setDepartment(updatedTeacher.getDepartment());
         teacher.setDesignation(updatedTeacher.getDesignation());
         teacher.setExperience(updatedTeacher.getExperience());
-        teacher.setContact(updatedTeacher.getContact());
+
 
         Teacher savedTeacher = teacherRepository.save(teacher);
         return TeacherMapper.mapToTeacherDto(savedTeacher);
