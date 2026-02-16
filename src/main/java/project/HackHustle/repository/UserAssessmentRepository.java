@@ -29,4 +29,5 @@ public interface UserAssessmentRepository extends JpaRepository<UserAssessment, 
 
     // Count total assessments for a topic
     long countByTopic(Topic topic);
+
 }

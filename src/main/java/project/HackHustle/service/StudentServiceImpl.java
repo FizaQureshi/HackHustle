@@ -27,9 +27,9 @@ public class StudentServiceImpl implements StudentService
     }
 
     @Override
-    public StudentDto getStudentById(Long studentId)
+    public StudentDto getStudentById(String studentId)
     {
-        Student student = studentRepository.findById(studentId).orElseThrow(() -> new ResourceNotFoundException("Student not found"));
+        Student student = studentRepository.findByEmailId(studentId).orElseThrow(() -> new ResourceNotFoundException("Student not found"));
         return StudentMapper.mapToStudentDto(student);
     }
 

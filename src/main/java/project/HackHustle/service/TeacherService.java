@@ -17,4 +17,6 @@ public interface TeacherService
     void deleteTeacher(Long teacherId);
 
     void loginTeacher(String email, String password);
+
+    TeacherDto getTeacherByEmail(String email);
 }

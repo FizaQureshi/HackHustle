@@ -80,4 +80,11 @@ public class TeacherController
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();      //401 Unauthorized -> wrong password
         }
     }
+
+    // http://localhost:8080/api/teachers/email/{email}
+    @GetMapping("/email/{email}")
+    public ResponseEntity<TeacherDto> getTeacherByEmail(@PathVariable String email) {
+        TeacherDto teacherDto = teacherService.getTeacherByEmail(email);
+        return ResponseEntity.ok(teacherDto);
+    }
 }

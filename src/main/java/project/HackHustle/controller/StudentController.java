@@ -30,8 +30,8 @@ public class StudentController
     }
 
     //http://localhost:8080/api/students/1001
-    @GetMapping("{id}")
-    public ResponseEntity<StudentDto> getStudentById(@PathVariable("id") Long studentId)
+    @GetMapping("{emailId}")
+    public ResponseEntity<StudentDto> getStudentById(@PathVariable("emailId") String studentId)
     {
         StudentDto studentDto = studentService.getStudentById(studentId);
         return new ResponseEntity<>(studentDto, HttpStatus.OK);
