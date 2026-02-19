@@ -83,6 +83,17 @@ public class StudentController
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();      //401 Unauthorized -> wrong password
         }
     }
+    @PostMapping("/update-password")
+    public ResponseEntity<String> updatePassword(@RequestBody Map<String, String> request) {
+
+        String email = request.get("email");
+        String newPassword = request.get("newPassword");
+
+        studentService.updatePassword(email, newPassword);
+
+        return ResponseEntity.ok("Password updated successfully");
+    }
+
 
 //    @PostMapping("/login")
 //    public ResponseEntity<Map<String, String>> loginStudent(@RequestBody LoginDto loginDto)

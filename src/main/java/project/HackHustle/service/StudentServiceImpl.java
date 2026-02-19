@@ -78,6 +78,16 @@ public class StudentServiceImpl implements StudentService
 
         // Successful login — do nothing, just return
     }
+    @Override
+    public void updatePassword(String email, String newPassword) {
+
+        Student student = studentRepository.findByEmailId(email)
+                .orElseThrow(() -> new ResourceNotFoundException("Student not found with email: " + email));
+
+        student.setPassword(newPassword);   // no encoding
+        studentRepository.save(student);
+    }
+
 
 
 }
