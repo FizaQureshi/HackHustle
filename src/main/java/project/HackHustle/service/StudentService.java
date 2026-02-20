@@ -16,8 +16,13 @@ public interface StudentService
 
     void deleteStudent(Long studentId);
 
+
     StudentDto loginStudent(String email, String password);
 
     StudentDto getStudentByEmail(String email);
+
+    void loginStudent(String email, String password);
+    void updatePassword(String email, String newPassword);
+
 
 }

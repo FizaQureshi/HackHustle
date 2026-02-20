@@ -3,6 +3,7 @@ package project.HackHustle.service;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import project.HackHustle.dto.TeacherDto;
+import project.HackHustle.entity.Student;
 import project.HackHustle.entity.Teacher;
 import project.HackHustle.exception.ResourceNotFoundException;
 import project.HackHustle.mapper.TeacherMapper;
@@ -93,4 +94,14 @@ public class TeacherServiceImpl implements TeacherService
 
         return TeacherMapper.mapToTeacherDto(teacher);
     }
+    @Override
+    public void updatePassword(String email, String newPassword) {
+
+        Teacher teacher = teacherRepository.findByEmailId(email)
+                .orElseThrow(() -> new ResourceNotFoundException("Student not found with email: " + email));
+
+        teacher.setPassword(newPassword);   // no encoding
+       teacherRepository.save(teacher);
+    }
+
 }

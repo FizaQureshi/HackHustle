@@ -10,6 +10,7 @@ import project.HackHustle.exception.ResourceNotFoundException;
 import project.HackHustle.service.TeacherService;
 
 import java.util.List;
+import java.util.Map;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @AllArgsConstructor
@@ -86,5 +87,15 @@ public class TeacherController
     public ResponseEntity<TeacherDto> getTeacherByEmail(@PathVariable String email) {
         TeacherDto teacherDto = teacherService.getTeacherByEmail(email);
         return ResponseEntity.ok(teacherDto);
+    }
+    @PostMapping("/update-password")
+    public ResponseEntity<String> updatePassword(@RequestBody Map<String, String> request) {
+
+        String email = request.get("email");
+        String newPassword = request.get("newPassword");
+
+        teacherService.updatePassword(email, newPassword);
+
+        return ResponseEntity.ok("Password updated successfully");
     }
 }
