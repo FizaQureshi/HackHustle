@@ -21,7 +21,7 @@ public interface StudentService
 
     StudentDto getStudentByEmail(String email);
 
-    void loginStudent(String email, String password);
+    //void loginStudent(String email, String password);
     void updatePassword(String email, String newPassword);
 
 
