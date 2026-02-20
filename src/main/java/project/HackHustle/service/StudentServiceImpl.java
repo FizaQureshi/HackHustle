@@ -66,7 +66,7 @@ public class StudentServiceImpl implements StudentService
     }
 
     @Override
-    public void loginStudent(String email, String password) {
+    public StudentDto loginStudent(String email, String password) {
         // Check if email exists
         Student student = studentRepository.findByEmailId(email)
                 .orElseThrow(() -> new ResourceNotFoundException("Student not found with email: " + email));
@@ -75,9 +75,15 @@ public class StudentServiceImpl implements StudentService
         if (!student.getPassword().equals(password)) {
             throw new IllegalArgumentException("Incorrect password");
         }
-
-        // Successful login — do nothing, just return
+        return StudentMapper.mapToStudentDto(student);  // Successful login
     }
 
+    @Override
+    public StudentDto getStudentByEmail(String email) {
 
+        Student student = studentRepository.findByEmailId(email)
+                .orElseThrow(() -> new RuntimeException("Student not found"));
+
+        return StudentMapper.mapToStudentDto(student); // use your existing mapper method
+    }
 }

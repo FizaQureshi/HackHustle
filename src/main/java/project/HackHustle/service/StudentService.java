@@ -16,6 +16,8 @@ public interface StudentService
 
     void deleteStudent(Long studentId);
 
-    void loginStudent(String email, String password);
+    StudentDto loginStudent(String email, String password);
+
+    StudentDto getStudentByEmail(String email);
 
 }

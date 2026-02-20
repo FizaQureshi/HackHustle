@@ -2,7 +2,6 @@ package project.HackHustle.mapper;
 
 import project.HackHustle.dto.DoubtDto;
 import project.HackHustle.entity.Doubt;
-import project.HackHustle.entity.Question;
 import project.HackHustle.entity.Student;
 import project.HackHustle.entity.Teacher;
 
@@ -17,8 +16,8 @@ public class DoubtMapper {
                 doubt.getQueryAsked(),
                 doubt.getAnswerProvided(),
                 doubt.getStudent().getStudentId(),
-                doubt.getQuestion().getQuestionID(),
-                doubt.getTeacher().getTeacherID()
+                doubt.getTeacher().getTeacherID(),
+                doubt.getSelectedSubject()
         );
     }
 
@@ -31,6 +30,7 @@ public class DoubtMapper {
         doubt.setDate(doubtDto.getDate());
         doubt.setQueryAsked(doubtDto.getQueryAsked());
         doubt.setAnswerProvided(doubtDto.getAnswerProvided());
+        doubt.setSelectedSubject(doubtDto.getSelectedSubject());
 
         // Creating objects for foreign keys
         if (doubtDto.getStudentId() != null) {
@@ -43,12 +43,6 @@ public class DoubtMapper {
             Teacher teacher = new Teacher();
             teacher.setTeacherID(doubtDto.getTeacherID());
             doubt.setTeacher(teacher);
-        }
-
-        if (doubtDto.getQuestionID() != null) {
-            Question question = new Question();
-            question.setQuestionID(doubtDto.getQuestionID());
-            doubt.setQuestion(question);
         }
 
         return doubt;

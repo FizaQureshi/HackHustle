@@ -30,10 +30,10 @@ public class Doubt
     @CreationTimestamp
     private LocalDateTime date;
 
-    @Column(name = "query_asked", nullable = false)
+    @Column(name = "query_asked", nullable = false, length = 2000)
     private String queryAsked;
 
-    @Column(name = "answer_provided", nullable = false)
+    @Column(name = "answer_provided", length = 2000)
     private String answerProvided;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -41,12 +41,11 @@ public class Doubt
     private Student student;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "question_id", nullable = false)
-    private Question question;
-
-    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "teacher_id", nullable = false)
     private Teacher teacher;
+
+    @Column(name = "selected_subject", nullable = false)
+    private String selectedSubject;
 
     @PrePersist
     public void prePersist()
@@ -57,4 +56,5 @@ public class Doubt
         if(answerProvided == null)
             answerProvided = "None";
     }
+
 }
