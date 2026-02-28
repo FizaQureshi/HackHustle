@@ -20,4 +20,5 @@ public interface TeacherService
 
     TeacherDto getTeacherByEmail(String email);
     void updatePassword(String email, String newPassword);
+    void rateTeacher(Long teacherId, Long rating);
 }
