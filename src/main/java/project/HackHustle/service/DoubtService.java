@@ -15,4 +15,6 @@ public interface DoubtService {
     List<DoubtDto> teacherDoubtList(Long teacherID);
 
     List<DoubtDto> studentDoubtList(Long studentId);
+
+    DoubtDto createDoubt(DoubtDto doubtDto);
 }

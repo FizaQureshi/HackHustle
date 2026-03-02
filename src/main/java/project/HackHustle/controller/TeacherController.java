@@ -10,6 +10,7 @@ import project.HackHustle.exception.ResourceNotFoundException;
 import project.HackHustle.service.TeacherService;
 
 import java.util.List;
+import java.util.Map;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @AllArgsConstructor
@@ -87,4 +88,28 @@ public class TeacherController
         TeacherDto teacherDto = teacherService.getTeacherByEmail(email);
         return ResponseEntity.ok(teacherDto);
     }
+    @PostMapping("/update-password")
+    public ResponseEntity<String> updatePassword(@RequestBody Map<String, String> request) {
+
+        String email = request.get("email");
+        String newPassword = request.get("newPassword");
+
+        teacherService.updatePassword(email, newPassword);
+
+        return ResponseEntity.ok("Password updated successfully");
+    }
+
+    // http://localhost:8080/api/teachers/1001/rate
+    @PutMapping("/{id}/rate")
+    public ResponseEntity<String> rateTeacher(@PathVariable("id") Long teacherId, @RequestBody Map<String, Long> request) {
+        Long ratingValue = request.get("rating");
+
+        if (ratingValue == null) {
+            return ResponseEntity.badRequest().body("Rating value is required");
+        }
+
+        teacherService.rateTeacher(teacherId, ratingValue);
+        return ResponseEntity.ok("Teacher rated successfully");
+    }
+
 }

@@ -3,6 +3,7 @@ package project.HackHustle.service;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import project.HackHustle.dto.TeacherDto;
+import project.HackHustle.entity.Student;
 import project.HackHustle.entity.Teacher;
 import project.HackHustle.exception.ResourceNotFoundException;
 import project.HackHustle.mapper.TeacherMapper;
@@ -93,4 +94,36 @@ public class TeacherServiceImpl implements TeacherService
 
         return TeacherMapper.mapToTeacherDto(teacher);
     }
+    @Override
+    public void updatePassword(String email, String newPassword) {
+
+        Teacher teacher = teacherRepository.findByEmailId(email)
+                .orElseThrow(() -> new ResourceNotFoundException("Student not found with email: " + email));
+
+        teacher.setPassword(newPassword);   // no encoding
+       teacherRepository.save(teacher);
+    }
+
+
+    @Override
+    public void rateTeacher(Long teacherId, Long newRatingValue) {
+        // 1. Fetch current data from DB
+        Teacher teacher = teacherRepository.findById(teacherId)
+                .orElseThrow(() -> new ResourceNotFoundException("Teacher not found"));
+
+        // 2. Get existing values (handle nulls just in case)
+        double currentAvg = (teacher.getRating() != null) ? teacher.getRating() : 0.0;
+        int currentCount = (teacher.getNumberOfRatings() != null) ? teacher.getNumberOfRatings() : 0;
+
+        // 3. The Math: (OldTotal + NewValue) / NewCount
+        double newAverage = ((currentAvg * currentCount) + newRatingValue) / (currentCount + 1);
+
+        // 4. Update the object
+        teacher.setRating(newAverage);
+        teacher.setNumberOfRatings(currentCount + 1); // Maintenance happens here!
+
+        // 5. Save back to DB
+        teacherRepository.save(teacher);
+    }
+
 }

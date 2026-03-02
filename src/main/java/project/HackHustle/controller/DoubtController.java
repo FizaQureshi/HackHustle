@@ -22,7 +22,9 @@ public class DoubtController
       @PostMapping
         public ResponseEntity<DoubtDto> createDoubt(@RequestBody  DoubtDto doubtDto)
       {
-          DoubtDto savedDoubt = doubtService.saveDoubt(doubtDto);
+//          DoubtDto savedDoubt = doubtService.saveDoubt(doubtDto);
+//          return new ResponseEntity<>(savedDoubt, HttpStatus.CREATED);
+          DoubtDto savedDoubt = doubtService.createDoubt(doubtDto);
           return new ResponseEntity<>(savedDoubt, HttpStatus.CREATED);
       }
 

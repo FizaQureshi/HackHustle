@@ -67,12 +67,15 @@ public class StudentController
 
     //http://localhost:8080/api/students/login
     @PostMapping("/login")
-    public ResponseEntity<Void> loginStudent(@RequestBody LoginDto loginDto)
+    public ResponseEntity<StudentDto> loginStudent(@RequestBody LoginDto loginDto)
     {
         try
         {
-            studentService.loginStudent(loginDto.getEmailId(), loginDto.getPassword());
-            return ResponseEntity.ok().build();         //200 OK -> success
+            StudentDto student = studentService.loginStudent(
+                    loginDto.getEmailId(),
+                    loginDto.getPassword()
+            );
+            return ResponseEntity.ok(student);         //200 OK -> success
         }
         catch (ResourceNotFoundException ex)
         {
@@ -83,26 +86,24 @@ public class StudentController
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();      //401 Unauthorized -> wrong password
         }
     }
+    @PostMapping("/update-password")
+    public ResponseEntity<String> updatePassword(@RequestBody Map<String, String> request) {
 
-//    @PostMapping("/login")
-//    public ResponseEntity<Map<String, String>> loginStudent(@RequestBody LoginDto loginDto)
-//    {
-//        try {
-//            studentService.loginStudent(loginDto.getEmailId(), loginDto.getPassword());
-//            Map<String, String> response = new HashMap<>();
-//            response.put("message", "Login successful");
-//            // optionally, return token: response.put("token", jwtToken);
-//            return ResponseEntity.ok(response);
-//        } catch (ResourceNotFoundException ex) {
-//            Map<String, String> response = new HashMap<>();
-//            response.put("message", "User not found");
-//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
-//        } catch (IllegalArgumentException ex) {
-//            Map<String, String> response = new HashMap<>();
-//            response.put("message", "Incorrect password");
-//            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
-//        }
-//    }
+        String email = request.get("email");
+        String newPassword = request.get("newPassword");
+
+        studentService.updatePassword(email, newPassword);
+
+        return ResponseEntity.ok("Password updated successfully");
+    }
+
+
+
+    @GetMapping("/email/{email}")
+    public ResponseEntity<StudentDto> getStudentByEmail(@PathVariable String email) {
+        StudentDto studentDto = studentService.getStudentByEmail(email);
+        return ResponseEntity.ok(studentDto);
+    }
 
 }
 

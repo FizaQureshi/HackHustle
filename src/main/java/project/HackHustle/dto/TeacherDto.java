@@ -16,11 +16,11 @@ public class TeacherDto
     private String lastName;
     private String emailId;
     private String password;
-    private Long rating;
+    private Double rating;
     private String subjectAssociated;
     private String institute;
     private String department;
     private String designation;
     private String experience;
-
+    private Integer numberOfRatings;
 }

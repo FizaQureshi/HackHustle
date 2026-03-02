@@ -19,6 +19,6 @@ public class DoubtDto {
     private String queryAsked;
     private String answerProvided;
     private Long  studentId;
-    private Long  questionID;
     private Long teacherID;
+    private String selectedSubject;
 }
