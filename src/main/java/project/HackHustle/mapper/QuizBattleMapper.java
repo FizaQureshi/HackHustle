@@ -13,35 +13,34 @@ public class QuizBattleMapper {
     public static QuizBattleDto mapToQuizBattleDto(QuizBattle quizBattle) {
         return new QuizBattleDto(
                 quizBattle.getQuizID(),
-                quizBattle.getDate(),
+                quizBattle.getQuizNumber(),
+                quizBattle.getPlayerNumber(),
                 quizBattle.getStudent().getStudentId(),
                 quizBattle.getQuizScore(),
                 quizBattle.getStatus(),
-                quizBattle.getSubject().getSubjectID(),
-                quizBattle.getBattleId()
+                quizBattle.getBattleCode()
         );
     }
 
     // Mapping DTO -> entity
-    public static QuizBattle mapToQuizBattle(QuizBattleDto quizBattleDTO, StudentRepository studentRepository, SubjectRepository subjectRepository) {
+    public static QuizBattle mapToQuizBattle(
+            QuizBattleDto quizBattleDTO,
+            StudentRepository studentRepository) {
 
-        // Fetch Student entity from DB using studentID and Subject using subjectId
+        // Fetch Student entity
         Student student = studentRepository.findById(quizBattleDTO.getStudentId())
                 .orElseThrow(() ->
-                        new RuntimeException("Student not found with ID: " + quizBattleDTO.getStudentId()));
-
-        Subject subject = subjectRepository.findById(quizBattleDTO.getSubjectId())
-                .orElseThrow(() ->
-                        new RuntimeException("Subject not found with ID: " + quizBattleDTO.getSubjectId()));
+                        new RuntimeException("Student not found with ID: "
+                                + quizBattleDTO.getStudentId()));
 
         QuizBattle quizBattle = new QuizBattle();
+
         quizBattle.setQuizID(quizBattleDTO.getQuizID());
-        quizBattle.setDate(quizBattleDTO.getDate());
-        quizBattle.setStudent(student); // set the Student entity
+        quizBattle.setQuizNumber(quizBattleDTO.getQuizNumber());
+        quizBattle.setPlayerNumber(quizBattleDTO.getPlayerNumber());
+        quizBattle.setStudent(student);
         quizBattle.setQuizScore(quizBattleDTO.getQuizScore());
         quizBattle.setStatus(quizBattleDTO.getStatus());
-        quizBattle.setSubject(subject);
-        quizBattle.setBattleId(quizBattleDTO.getBattleId());
 
         return quizBattle;
     }

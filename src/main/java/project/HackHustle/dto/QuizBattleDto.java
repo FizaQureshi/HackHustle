@@ -14,10 +14,16 @@ import java.time.LocalDateTime;
 public class QuizBattleDto
 {
     private Long quizID;
-    private LocalDateTime date;
-    private Long studentId;
+
+    private Integer quizNumber;
+
+    private Integer playerNumber;
+
+    private Long studentId;   // extracted from Student entity
+
     private Long quizScore;
+
     private String status;
-    private Long subjectId;
-    private String battleId;
+
+    private String battleCode;
 }
