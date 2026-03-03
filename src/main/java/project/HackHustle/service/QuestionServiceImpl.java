@@ -45,4 +45,13 @@ public class QuestionServiceImpl implements QuestionService{
                 .map(QuestionMapper::mapToQuestionDto)
                 .collect(Collectors.toList());
     }
+    @Override
+    public List<QuestionDto> getQuestionForQuiz() {
+
+        List<Question> questions = questionRepository.findRandom10();
+
+        return questions.stream()
+                .map(QuestionMapper::mapToQuestionDto)
+                .collect(Collectors.toList());
+    }
 }

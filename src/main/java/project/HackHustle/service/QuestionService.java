@@ -11,4 +11,5 @@ public interface QuestionService {
     List<QuestionDto> getQuestionByTopic(String topicName);
 
     List<QuestionDto> getQuestionBySubject(Long subjectID);
+    List<QuestionDto> getQuestionForQuiz();
 }

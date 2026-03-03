@@ -49,4 +49,15 @@ public class QuestionController {
         }
         return ResponseEntity.ok(list);
     }
+    @GetMapping("/quiz")
+    public ResponseEntity<List<QuestionDto>> getQuestionsForQuiz() {
+
+        List<QuestionDto> list = questionService.getQuestionForQuiz();
+
+        if (list.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+
+        return ResponseEntity.ok(list);
+    }
 }
