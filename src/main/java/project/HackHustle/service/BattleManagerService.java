@@ -1,151 +1,43 @@
-//package project.HackHustle.service;
-//
-//import lombok.AllArgsConstructor;
-//import org.springframework.stereotype.Service;
-//import project.HackHustle.battle.BattleRoom;
-//import project.HackHustle.battle.BattleStatus;
-//import java.util.UUID;
-//import org.springframework.messaging.simp.SimpMessagingTemplate;
-//import lombok.RequiredArgsConstructor;
-//
-//import java.util.Map;
-//import java.util.concurrent.ConcurrentHashMap;
-//
-//@Service
-//@RequiredArgsConstructor
-//public class BattleManagerService {
-//
-//    private Map<String, BattleRoom> activeBattles = new ConcurrentHashMap<>();
-//    private final SimpMessagingTemplate messagingTemplate;
-//
-//
-//    public String createBattle(Long hostId) {
-//
-//        String code = generateCode();
-//
-//        BattleRoom room = new BattleRoom();
-//        room.setBattleCode(code);
-//        room.setHostId(hostId);
-//        room.getPlayers().add(hostId);
-//        room.getScores().put(hostId, 0);
-//
-//        activeBattles.put(code, room);
-//
-//        return code;
-//    }
-//
-//    public BattleRoom joinBattle(String code, Long studentId) {
-//
-//        BattleRoom room = activeBattles.get(code);
-//
-//        if (room == null)
-//            throw new RuntimeException("Invalid Code");
-//
-//        if (room.getPlayers().size() >= 5)
-//            throw new RuntimeException("Battle Full");
-//
-//        if (room.getStatus() != BattleStatus.WAITING)
-//            throw new RuntimeException("Already Started");
-//
-//        if (room.getPlayers().contains(studentId))
-//            throw new RuntimeException("Already Joined");
-//
-//        room.getPlayers().add(studentId);
-//        room.getScores().put(studentId, 0);
-//
-//        return room;
-//    }
-//
-//    public void startBattle(String code, Long studentId) {
-//
-//        BattleRoom room = activeBattles.get(code);
-//
-//        if (!room.getHostId().equals(studentId))
-//            throw new RuntimeException("Only Host Can Start");
-//
-//        if (room.getPlayers().size() < 2)
-//            throw new RuntimeException("Minimum 2 Players Required");
-//
-//        room.setStatus(BattleStatus.LIVE);
-//    }
-//    public void handleJoin(project.HackHustle.socket.SocketMessage message) {
-//
-//        BattleRoom room = activeBattles.get(message.getCode());
-//        if (room == null) return;
-//
-//        messagingTemplate.convertAndSend(
-//                "/topic/" + message.getCode(),
-//                "Player " + message.getStudentId() + " joined"
-//        );
-//    }
-//
-//    public void handleAnswer(project.HackHustle.socket.SocketMessage message) {
-//
-//        BattleRoom room = activeBattles.get(message.getCode());
-//
-//        if (room == null || room.getStatus() != BattleStatus.LIVE)
-//            return;
-//
-//        if ("A".equalsIgnoreCase(message.getAnswer())) {
-//            room.getScores().merge(message.getStudentId(), 10, Integer::sum);
-//        }
-//
-//        messagingTemplate.convertAndSend(
-//                "/topic/" + message.getCode(),
-//                room.getScores()
-//        );
-//    }
-//
-//    private String generateCode() {
-//        return UUID.randomUUID().toString().substring(0,6).toUpperCase();
-//    }
-//
-//    public BattleRoom getRoom(String code) {
-//        return activeBattles.get(code);
-//    }
-//}
-//
-
-
-
-
-
-
-
-
 
 
 package project.HackHustle.service;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 import project.HackHustle.battle.BattleRoom;
 import project.HackHustle.battle.BattleStatus;
+import project.HackHustle.entity.QuizBattle;
+import project.HackHustle.entity.Student;
+import project.HackHustle.repository.QuizBattleRepository;
+import project.HackHustle.repository.StudentRepository;
 import project.HackHustle.socket.SocketMessage;
+import project.HackHustle.dto.QuestionDto;
 
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class BattleManagerService {
 
     private final SimpMessagingTemplate messagingTemplate;
-
-    // in-memory battle storage
+    private final QuestionService questionService; // 🔥 Injected to fetch your DB questions
     private final Map<String, BattleRoom> activeBattles = new ConcurrentHashMap<>();
-
+    private final QuizBattleRepository quizBattleRepository; // 🔥 Inject this
+    private final StudentRepository studentRepository;
     /* ================= CREATE ================= */
-
     public String createBattle(Long hostId) {
-
         String code = generateCode();
-
         BattleRoom room = new BattleRoom();
         room.setBattleCode(code);
         room.setHostId(hostId);
+
+        // 🔥 Fetch 10 random questions using your working getQuestionForQuiz() logic
+        room.setQuestions(questionService.getQuestionForQuiz());
+
         room.getPlayers().add(hostId);
         room.getScores().put(hostId, 0);
         room.setStatus(BattleStatus.WAITING);
@@ -155,90 +47,89 @@ public class BattleManagerService {
     }
 
     /* ================= JOIN (REST) ================= */
-
     public BattleRoom joinBattle(String code, Long studentId) {
-
         BattleRoom room = activeBattles.get(code);
-        if (room == null)
-            throw new RuntimeException("Invalid Battle Code");
-
-        if (room.getStatus() != BattleStatus.WAITING)
-            throw new RuntimeException("Battle Already Started");
+        if (room == null) throw new RuntimeException("Invalid Battle Code");
+        if (room.getStatus() != BattleStatus.WAITING) throw new RuntimeException("Battle Already Started");
 
         if (!room.getPlayers().contains(studentId)) {
             room.getPlayers().add(studentId);
             room.getScores().put(studentId, 0);
         }
-
         return room;
     }
 
     /* ================= JOIN (SOCKET) ================= */
-
     public void handleJoin(SocketMessage message) {
-
         BattleRoom room = activeBattles.get(message.getCode());
         if (room == null) return;
 
-        // 🔥 broadcast updated room to all players
-        messagingTemplate.convertAndSend(
-                "/topic/battle/" + message.getCode(),
-                room
-        );
+        // 🔥 Broadcast the FULL room object so everyone (Host + Joined player) sees the updated state
+        messagingTemplate.convertAndSend("/topic/battle/" + message.getCode(), room);
     }
 
     /* ================= START ================= */
-
     public void startBattle(String code, Long studentId) {
-
         BattleRoom room = activeBattles.get(code);
-        if (room == null)
-            throw new RuntimeException("Battle Not Found");
-
-        if (!room.getHostId().equals(studentId))
-            throw new RuntimeException("Only Host Can Start");
+        if (room == null) throw new RuntimeException("Battle Not Found");
+        if (!room.getHostId().equals(studentId)) throw new RuntimeException("Only Host Can Start");
 
         room.setStatus(BattleStatus.LIVE);
 
-        // 🔥 notify everyone battle started
-        messagingTemplate.convertAndSend(
-                "/topic/battle/" + code,
-                "START"
-        );
+        // 🔥 Send "START" string to trigger everyone's screen change to 'game' mode
+        messagingTemplate.convertAndSend("/topic/battle/" + code, "START");
     }
 
     /* ================= ANSWER (SOCKET) ================= */
-
+//    public void handleAnswer(SocketMessage message) {
+//        BattleRoom room = activeBattles.get(message.getCode());
+//        if (room == null || room.getStatus() != BattleStatus.LIVE) return;
+//
+//        // 🔥 Validate the player's answer against the real DB questions stored in this room
+//        boolean isCorrect = room.getQuestions().stream()
+//                .anyMatch(q -> q.getCorrectAnswer().equalsIgnoreCase(message.getAnswer()));
+//
+//        if (isCorrect) {
+//            room.getScores().merge(message.getStudentId(), 10, Integer::sum);
+//        }
+//
+//        // 🔥 Broadcast updated room object (with scores) back to everyone
+//        messagingTemplate.convertAndSend("/topic/battle/" + message.getCode(), room);
+//    }
     public void handleAnswer(SocketMessage message) {
-
         BattleRoom room = activeBattles.get(message.getCode());
-        if (room == null || room.getStatus() != BattleStatus.LIVE)
-            return;
+        if (room == null || room.getStatus() != BattleStatus.LIVE) return;
 
-        if ("A".equalsIgnoreCase(message.getAnswer())) {
-            room.getScores().merge(
-                    message.getStudentId(),
-                    10,
-                    Integer::sum
-            );
+        // Check correctness
+        boolean isCorrect = room.getQuestions().stream()
+                .anyMatch(q -> q.getCorrectAnswer().equalsIgnoreCase(message.getAnswer()));
+
+        if (isCorrect) {
+            room.getScores().merge(message.getStudentId(), 10, Integer::sum);
+
+            // 🔥 UPDATE DATABASE ENTRY
+            // Hum unique Quiz + Student combination fetch karke update karenge
+            Student student = studentRepository.findById(message.getStudentId()).orElse(null);
+            if (student != null) {
+                QuizBattle record = new QuizBattle();
+                record.setStudent(student);
+                record.setQuizNumber(1); // Set actual quiz number here
+                record.setPlayerNumber(1); // Set actual player number here
+                record.setQuizScore(room.getScores().get(message.getStudentId()).longValue());
+                record.setStatus("LIVE");
+
+                quizBattleRepository.save(record); // 💾 Ab MySQL mein entry dikhegi!
+            }
         }
 
-        // 🔥 broadcast updated scores
-        messagingTemplate.convertAndSend(
-                "/topic/battle/" + message.getCode(),
-                room.getScores()
-        );
+        messagingTemplate.convertAndSend("/topic/battle/" + message.getCode(), room);
     }
-
-    /* ================= GET ================= */
 
     public BattleRoom getRoom(String code) {
         return activeBattles.get(code);
     }
 
     private String generateCode() {
-        return UUID.randomUUID().toString()
-                .substring(0, 6)
-                .toUpperCase();
+        return UUID.randomUUID().toString().substring(0, 6).toUpperCase();
     }
 }

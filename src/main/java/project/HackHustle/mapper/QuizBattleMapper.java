@@ -9,17 +9,20 @@ import project.HackHustle.repository.SubjectRepository;
 
 public class QuizBattleMapper {
 
-    // Mapping entity -> DTO
+    // ✅ Entity -> DTO
     public static QuizBattleDto mapToQuizBattleDto(QuizBattle quizBattle) {
-        return new QuizBattleDto(
-                quizBattle.getQuizID(),
-                quizBattle.getQuizNumber(),
-                quizBattle.getPlayerNumber(),
-                quizBattle.getStudent().getStudentId(),
-                quizBattle.getQuizScore(),
-                quizBattle.getStatus(),
-                quizBattle.getBattleCode()
-        );
+
+        QuizBattleDto dto = new QuizBattleDto();
+
+        dto.setQuizID(quizBattle.getQuizID());
+        dto.setQuizNumber(quizBattle.getQuizNumber());
+        dto.setPlayerNumber(quizBattle.getPlayerNumber());
+        dto.setStudentEmail(quizBattle.getStudent().getEmailId()); // email return
+        dto.setQuizScore(quizBattle.getQuizScore());
+        dto.setStatus(quizBattle.getStatus());
+        dto.setBattleCode(quizBattle.getBattleCode());
+
+        return dto;
     }
 
     // Mapping DTO -> entity
@@ -27,11 +30,15 @@ public class QuizBattleMapper {
             QuizBattleDto quizBattleDTO,
             StudentRepository studentRepository) {
 
-        // Fetch Student entity
-        Student student = studentRepository.findById(quizBattleDTO.getStudentId())
+        // Fetch Student using email
+        Student student = studentRepository
+                .findByEmailId(quizBattleDTO.getStudentEmail())
                 .orElseThrow(() ->
-                        new RuntimeException("Student not found with ID: "
-                                + quizBattleDTO.getStudentId()));
+                        new RuntimeException(
+                                "Student not found with email: "
+                                        + quizBattleDTO.getStudentEmail()
+                        )
+                );
 
         QuizBattle quizBattle = new QuizBattle();
 

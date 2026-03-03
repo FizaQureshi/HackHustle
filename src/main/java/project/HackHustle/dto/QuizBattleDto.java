@@ -19,7 +19,7 @@ public class QuizBattleDto
 
     private Integer playerNumber;
 
-    private Long studentId;   // extracted from Student entity
+    private String studentEmail;
 
     private Long quizScore;
 

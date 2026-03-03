@@ -63,12 +63,12 @@ import java.util.List;
 @CrossOrigin(origins = "http://localhost:3000")
 @AllArgsConstructor
 @RestController
-@RequestMapping("/api/quiz-battles")
+@RequestMapping("/api/battle")
 public class QuizBattleController {
 
     private final QuizBattleService quizBattleService;
 
-    @PostMapping
+    @PostMapping("/create")
     public ResponseEntity<QuizBattleDto> createQuizBattle(
             @RequestBody QuizBattleDto quizBattleDTO) {
 
@@ -88,7 +88,7 @@ public class QuizBattleController {
         return new ResponseEntity<>(battles, HttpStatus.OK);
     }
 
-    @GetMapping("/battle/{battleId}")
+    @GetMapping("/{battleId}")
     public ResponseEntity<QuizBattleDto> getQuizBattleByBattleId(
             @PathVariable String battleId) {
 
