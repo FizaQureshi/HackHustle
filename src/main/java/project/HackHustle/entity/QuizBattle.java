@@ -18,14 +18,32 @@ import java.time.LocalDateTime;
 @Table(name = "quiz_battle")
 public class QuizBattle
 {
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @Column(name = "quiz_id", nullable = false)
+//    private Long quizID;
+//
+//
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "student_id", nullable = false)
+//    private Student student;
+//
+//    @Column(name = "quiz_score", nullable = false)
+//    private Long quizScore;
+//
+//    @Column(name = "quiz_status", nullable = false)
+//    private String status;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "quiz_id", nullable = false)
     private Long quizID;
 
-    @Column(name = "date", nullable = false)
-    @CreationTimestamp
-    private LocalDateTime date;
+    @Column(name = "quiz_number", nullable = false)
+    private Integer quizNumber;
+
+    @Column(name = "player_number", nullable = false)
+    private Integer playerNumber;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "student_id", nullable = false)
@@ -37,10 +55,10 @@ public class QuizBattle
     @Column(name = "quiz_status", nullable = false)
     private String status;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "subject_id", nullable = false)
-    private Subject subject;
+    @Transient
+    public String getBattleCode() {
+        return quizNumber + "_" + playerNumber;
+    }
 
-    @Column(name = "battle_id", nullable = false)
-    private String battleId;
+
 }

@@ -4,6 +4,9 @@ import project.HackHustle.dto.QuizBattleDto;
 
 import java.util.List;
 
+
+
+
 public interface QuizBattleService {
 
     QuizBattleDto saveQuizBattle(QuizBattleDto quizBattleDTO);
@@ -12,5 +15,5 @@ public interface QuizBattleService {
 
     List<QuizBattleDto> getQuizBattlesByStudent(Long studentId);
 
-    List<QuizBattleDto> getQuizBattlesByBattleId(String battleId);
+    QuizBattleDto getQuizBattleByBattleId(String battleId);
 }
