@@ -37,4 +37,14 @@ List<Question> findRandom20ByTopic(@Param("topicName") String TopicName);
     )
     List<Question> findRandom20BySubject(@Param("subjectId") Long subjectId);
 
+    @Query(
+            value = """
+        SELECT *
+        FROM question
+        ORDER BY RAND()
+        LIMIT 10
+        """,
+            nativeQuery = true
+    )
+    List<Question> findRandom10();
 }
