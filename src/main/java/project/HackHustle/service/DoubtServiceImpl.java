@@ -145,6 +145,14 @@ public class DoubtServiceImpl implements DoubtService {
         return DoubtMapper.mapToDoubtDto(saved);
     }
 
+
+    @Override
+    public List<DoubtDto> teacherResolvedDoubtList(Long teacherID) {
+        List<Doubt> resolvedList =
+                doubtRepository.findByTeacher_TeacherIDAndDoubtStatus(teacherID, "Resolved");
+        return resolvedList.stream().map(DoubtMapper::mapToDoubtDto).toList();
+    }
+
 }
 
 

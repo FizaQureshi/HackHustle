@@ -68,5 +68,11 @@ public class DoubtController
             return ResponseEntity.ok("Doubt with ID " + doubtID + " deleted successfully");
         }
 
+    // http://localhost:8080/api/doubts/teacher/{id}/resolved
+    @GetMapping("/teacher/{id}/resolved")
+    public ResponseEntity<List<DoubtDto>> getResolvedDoubts(@PathVariable("id") Long teacherID) {
+        List<DoubtDto> list = doubtService.teacherResolvedDoubtList(teacherID);
+        return ResponseEntity.ok(list);
+    }
 
 }
