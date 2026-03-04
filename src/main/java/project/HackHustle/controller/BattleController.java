@@ -175,7 +175,7 @@ import project.HackHustle.service.StudentService;
 public class BattleController {
 
     private final BattleManagerService battleManagerService;
-    private StudentService studentService;
+    private final StudentService studentService;
     /**
      * CREATE BATTLE
      * Host creates battle and becomes first player
