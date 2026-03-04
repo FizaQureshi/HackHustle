@@ -104,4 +104,26 @@ public class TeacherServiceImpl implements TeacherService
        teacherRepository.save(teacher);
     }
 
+
+    @Override
+    public void rateTeacher(Long teacherId, Long newRatingValue) {
+        // 1. Fetch current data from DB
+        Teacher teacher = teacherRepository.findById(teacherId)
+                .orElseThrow(() -> new ResourceNotFoundException("Teacher not found"));
+
+        // 2. Get existing values (handle nulls just in case)
+        double currentAvg = (teacher.getRating() != null) ? teacher.getRating() : 0.0;
+        int currentCount = (teacher.getNumberOfRatings() != null) ? teacher.getNumberOfRatings() : 0;
+
+        // 3. The Math: (OldTotal + NewValue) / NewCount
+        double newAverage = ((currentAvg * currentCount) + newRatingValue) / (currentCount + 1);
+
+        // 4. Update the object
+        teacher.setRating(newAverage);
+        teacher.setNumberOfRatings(currentCount + 1); // Maintenance happens here!
+
+        // 5. Save back to DB
+        teacherRepository.save(teacher);
+    }
+
 }

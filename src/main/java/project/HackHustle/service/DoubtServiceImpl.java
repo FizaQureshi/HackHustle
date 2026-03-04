@@ -52,16 +52,35 @@ public class DoubtServiceImpl implements DoubtService {
 //        return DoubtMapper.mapToDoubtDto(saved);
     }
 
+//    @Override
+//    public DoubtDto updateDoubt(DoubtDto doubtDto)
+//    {
+//        Doubt doubt = doubtRepository.findById(doubtDto.getDoubtID()).orElseThrow(
+//                () -> new ResourceNotFoundException("Student does not exist with given id " + doubtDto.getDoubtID()));
+//
+//        doubt.setDoubtStatus(doubtDto.getDoubtStatus());
+//        doubt.setAnswerProvided(doubtDto.getAnswerProvided());
+//        doubtRepository.save(doubt);
+//
+//        return DoubtMapper.mapToDoubtDto(doubt);
+//    }
+
+    // project.HackHustle.service.DoubtServiceImpl
     @Override
-    public DoubtDto updateDoubt(DoubtDto doubtDto)
-    {
+    public DoubtDto updateDoubt(DoubtDto doubtDto) {
         Doubt doubt = doubtRepository.findById(doubtDto.getDoubtID()).orElseThrow(
-                () -> new ResourceNotFoundException("Student does not exist with given id " + doubtDto.getDoubtID()));
+                () -> new ResourceNotFoundException("Doubt does not exist with given id " + doubtDto.getDoubtID()));
 
-        doubt.setDoubtStatus(doubtDto.getDoubtStatus());
         doubt.setAnswerProvided(doubtDto.getAnswerProvided());
-        doubtRepository.save(doubt);
 
+        // LOGIC: If an answer is provided, set status to Resolved
+        if (doubtDto.getAnswerProvided() != null && !doubtDto.getAnswerProvided().isEmpty()) {
+            doubt.setDoubtStatus("Resolved");
+        } else {
+            doubt.setDoubtStatus(doubtDto.getDoubtStatus());
+        }
+
+        doubtRepository.save(doubt);
         return DoubtMapper.mapToDoubtDto(doubt);
     }
 
@@ -119,11 +138,19 @@ public class DoubtServiceImpl implements DoubtService {
         doubt.setQueryAsked(doubtDto.getQueryAsked());
         doubt.setStudent(student);
         doubt.setTeacher(teacher);
-        doubt.setSelectedSubject(doubtDto.getSelectedSubject());  // ✅ ADD THIS
+        doubt.setSelectedSubject(doubtDto.getSelectedSubject());
 
         Doubt saved = doubtRepository.save(doubt);
 
         return DoubtMapper.mapToDoubtDto(saved);
+    }
+
+
+    @Override
+    public List<DoubtDto> teacherResolvedDoubtList(Long teacherID) {
+        List<Doubt> resolvedList =
+                doubtRepository.findByTeacher_TeacherIDAndDoubtStatus(teacherID, "Resolved");
+        return resolvedList.stream().map(DoubtMapper::mapToDoubtDto).toList();
     }
 
 }

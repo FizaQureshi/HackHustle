@@ -36,7 +36,7 @@ public class Teacher
     private String password;
 
     @Column(name = "rating", nullable = false)
-    private Long rating = 0L;
+    private Double rating = 0.0;
 
     @Column(name = "subject_associated", nullable = false)
     private String subjectAssociated;   //a teacher handles only one subject
@@ -53,14 +53,17 @@ public class Teacher
     @Column(name = "experience", nullable = false)
     private String experience;
 
+    @Column(name = "number_of_ratings")
+    private Integer numberOfRatings = 0;
+
 //hello testing
     @PrePersist
     public void prePersist()
     {
-        if (rating == null) rating = 0L;
+        if (rating == null) rating = 0.0;
         if(designation == null) designation = "N/A";
         if(department == null) department = "N/A";
         if(experience == null) experience = "N/A";
-
+        if (numberOfRatings == null) numberOfRatings = 0;
     }
 }
