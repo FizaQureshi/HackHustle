@@ -167,6 +167,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import project.HackHustle.battle.BattleRoom;
 import project.HackHustle.service.BattleManagerService;
+import project.HackHustle.service.StudentService;
 
 @RestController
 @RequestMapping("/api/battle")
@@ -174,14 +175,15 @@ import project.HackHustle.service.BattleManagerService;
 public class BattleController {
 
     private final BattleManagerService battleManagerService;
-
+    private StudentService studentService;
     /**
      * CREATE BATTLE
      * Host creates battle and becomes first player
      */
-    @PostMapping("/create/{studentId}")
-    public ResponseEntity<String> createBattle(@PathVariable Long studentId) {
-        String battleCode = battleManagerService.createBattle(studentId);
+    @PostMapping("/create/{studentEmail}")
+    public ResponseEntity<String> createBattle(@PathVariable String  studentEmail) {
+        String battleCode = battleManagerService.createBattle(studentService.getStudentById(studentEmail).getStudentId());
+        
         return ResponseEntity.ok(battleCode);
     }
 
@@ -189,10 +191,10 @@ public class BattleController {
      * JOIN BATTLE
      * Student joins using battle code
      */
-    @PostMapping("/join/{code}/{studentId}")
+    @PostMapping("/join/{code}/{studentEmail}")
     public ResponseEntity<BattleRoom> joinBattle(@PathVariable String code,
-                                                 @PathVariable Long studentId) {
-        BattleRoom room = battleManagerService.joinBattle(code, studentId);
+                                                 @PathVariable String studentEmail) {
+        BattleRoom room = battleManagerService.joinBattle(code, studentService.getStudentById(studentEmail).getStudentId());
         return ResponseEntity.ok(room);
     }
 
@@ -200,10 +202,10 @@ public class BattleController {
      * START BATTLE
      * Only host can start
      */
-    @PostMapping("/start/{code}/{studentId}")
+    @PostMapping("/start/{code}/{studentEmail}")
     public ResponseEntity<String> startBattle(@PathVariable String code,
-                                              @PathVariable Long studentId) {
-        battleManagerService.startBattle(code, studentId);
+                                              @PathVariable String studentEmail) {
+        battleManagerService.startBattle(code, studentService.getStudentById(studentEmail).getStudentId());
         return ResponseEntity.ok("Battle Started Successfully");
     }
 
