@@ -96,35 +96,55 @@ public class BattleManagerService {
 //        // 🔥 Broadcast updated room object (with scores) back to everyone
 //        messagingTemplate.convertAndSend("/topic/battle/" + message.getCode(), room);
 //    }
+//    public void handleAnswer(SocketMessage message) {
+//        BattleRoom room = activeBattles.get(message.getCode());
+//        if (room == null || room.getStatus() != BattleStatus.LIVE) return;
+//
+//        // Check correctness
+//        boolean isCorrect = room.getQuestions().stream()
+//                .anyMatch(q -> q.getCorrectAnswer().equalsIgnoreCase(message.getAnswer()));
+//
+//        if (isCorrect) {
+//            room.getScores().merge(message.getStudentId(), 10, Integer::sum);
+//
+//            // 🔥 UPDATE DATABASE ENTRY
+//            // Hum unique Quiz + Student combination fetch karke update karenge
+//            Student student = studentRepository.findById(message.getStudentId()).orElse(null);
+//            if (student != null) {
+//                QuizBattle record = new QuizBattle();
+//                record.setStudent(student);
+//                record.setQuizNumber(1); // Set actual quiz number here
+//                record.setPlayerNumber(1); // Set actual player number here
+//                record.setQuizScore(room.getScores().get(message.getStudentId()).longValue());
+//                record.setStatus("LIVE");
+//
+//                quizBattleRepository.save(record); // 💾 Ab MySQL mein entry dikhegi!
+//            }
+//        }
+//
+//        messagingTemplate.convertAndSend("/topic/battle/" + message.getCode(), room);
+//    }
     public void handleAnswer(SocketMessage message) {
         BattleRoom room = activeBattles.get(message.getCode());
         if (room == null || room.getStatus() != BattleStatus.LIVE) return;
 
-        // Check correctness
-        boolean isCorrect = room.getQuestions().stream()
-                .anyMatch(q -> q.getCorrectAnswer().equalsIgnoreCase(message.getAnswer()));
+        int currentIndex = room.getCurrentQuestionIndex();
+        if (currentIndex >= room.getQuestions().size()) return;
+
+        // Correctness check
+        QuestionDto currentQuestion = room.getQuestions().get(currentIndex);
+        boolean isCorrect = currentQuestion.getCorrectAnswer().equalsIgnoreCase(message.getAnswer());
 
         if (isCorrect) {
             room.getScores().merge(message.getStudentId(), 10, Integer::sum);
-
-            // 🔥 UPDATE DATABASE ENTRY
-            // Hum unique Quiz + Student combination fetch karke update karenge
-            Student student = studentRepository.findById(message.getStudentId()).orElse(null);
-            if (student != null) {
-                QuizBattle record = new QuizBattle();
-                record.setStudent(student);
-                record.setQuizNumber(1); // Set actual quiz number here
-                record.setPlayerNumber(1); // Set actual player number here
-                record.setQuizScore(room.getScores().get(message.getStudentId()).longValue());
-                record.setStatus("LIVE");
-
-                quizBattleRepository.save(record); // 💾 Ab MySQL mein entry dikhegi!
-            }
         }
 
+        // 🔥 Force Move: Index barhao aur broadcast karo
+        room.setCurrentQuestionIndex(currentIndex + 1);
+
+        // Sabko update bhej do
         messagingTemplate.convertAndSend("/topic/battle/" + message.getCode(), room);
     }
-
     public BattleRoom getRoom(String code) {
         return activeBattles.get(code);
     }
