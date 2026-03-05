@@ -8,6 +8,6 @@ import lombok.Data;
 public class SocketMessage {
 
     private String code;       // battle code
-    private Long studentId;
+    private String StudentEmail;
     private String answer;     // used when answering
 }
