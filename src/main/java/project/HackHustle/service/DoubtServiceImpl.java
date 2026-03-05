@@ -30,42 +30,9 @@ public class DoubtServiceImpl implements DoubtService {
         Doubt savedDoubt = doubtRepository.save(doubt);
 
         return DoubtMapper.mapToDoubtDto(savedDoubt);
-
-//        Student student = studentRepository.findById(doubtDto.getStudentId())
-//                .orElseThrow(() -> new ResourceNotFoundException("Student not found"));
-//
-//
-//        Teacher teacher = teacherRepository
-//                .findBySubjectAssociated(question.getSubject())  // adjust if needed
-//                .orElseThrow(() -> new ResourceNotFoundException("No teacher found"));
-//
-//        Doubt doubt = new Doubt();
-//        doubt.setQueryAsked(doubtDto.getQueryAsked());
-//        doubt.setStudent(student);
-//        doubt.setTeacher(teacher);
-//
-//        doubt.setDoubtStatus("Pending");
-//        doubt.setAnswerProvided("None");
-//
-//        Doubt saved = doubtRepository.save(doubt);
-//
-//        return DoubtMapper.mapToDoubtDto(saved);
     }
 
-//    @Override
-//    public DoubtDto updateDoubt(DoubtDto doubtDto)
-//    {
-//        Doubt doubt = doubtRepository.findById(doubtDto.getDoubtID()).orElseThrow(
-//                () -> new ResourceNotFoundException("Student does not exist with given id " + doubtDto.getDoubtID()));
-//
-//        doubt.setDoubtStatus(doubtDto.getDoubtStatus());
-//        doubt.setAnswerProvided(doubtDto.getAnswerProvided());
-//        doubtRepository.save(doubt);
-//
-//        return DoubtMapper.mapToDoubtDto(doubt);
-//    }
 
-    // project.HackHustle.service.DoubtServiceImpl
     @Override
     public DoubtDto updateDoubt(DoubtDto doubtDto) {
         Doubt doubt = doubtRepository.findById(doubtDto.getDoubtID()).orElseThrow(
@@ -97,14 +64,6 @@ public class DoubtServiceImpl implements DoubtService {
     @Override
     public List<DoubtDto> teacherDoubtList(Long teacherID)
     {
-//        List<Doubt> teacherList = doubtRepository.findAll().stream()
-//                .filter(d -> d.getTeacher() != null && d.getTeacher().getTeacherID().equals(teacherID))
-//                .toList();
-//
-//        if (teacherList.isEmpty())
-//        {
-//                throw new ResourceNotFoundException("No doubts found for teacher ID: " + teacherID);
-//        }
         List<Doubt> teacherList =
                 doubtRepository.findByTeacher_TeacherIDAndDoubtStatus(teacherID, "Pending");
 
@@ -124,27 +83,37 @@ public class DoubtServiceImpl implements DoubtService {
         return studentList.stream().map(DoubtMapper::mapToDoubtDto).toList();
     }
 
+
+
     @Override
     public DoubtDto createDoubt(DoubtDto doubtDto) {
+        // 1. Fetch the specific teacher selected by the student
+        Teacher selectedTeacher = teacherRepository.findById(doubtDto.getTeacherID())
+                .orElseThrow(() -> new ResourceNotFoundException("Teacher not found with ID: " + doubtDto.getTeacherID()));
 
+        // 2. Fetch the student (Crucial: Hibernate will fail if student is null)
         Student student = studentRepository.findById(doubtDto.getStudentId())
-                .orElseThrow(() -> new ResourceNotFoundException("Student not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Student not found with ID: " + doubtDto.getStudentId()));
 
-        Teacher teacher = teacherRepository
-                .findBySubjectAssociated(doubtDto.getSelectedSubject())
-                .orElseThrow(() -> new ResourceNotFoundException("No teacher found for this subject"));
-
+        // 3. Create and populate the doubt entity
         Doubt doubt = new Doubt();
+
+        // IMPORTANT: Mapping the missing fields that caused your 500 error
         doubt.setQueryAsked(doubtDto.getQueryAsked());
         doubt.setStudent(student);
-        doubt.setTeacher(teacher);
+        doubt.setTeacher(selectedTeacher);
         doubt.setSelectedSubject(doubtDto.getSelectedSubject());
 
+        // Status and Date handling
+        doubt.setDoubtStatus("Pending"); // Ensuring consistency
+        // Note: 'date' is handled by @CreationTimestamp in your Entity, so no need to set it manually.
+
+        // 4. Save to Database
         Doubt saved = doubtRepository.save(doubt);
 
+        // 5. Return mapped DTO
         return DoubtMapper.mapToDoubtDto(saved);
     }
-
 
     @Override
     public List<DoubtDto> teacherResolvedDoubtList(Long teacherID) {
