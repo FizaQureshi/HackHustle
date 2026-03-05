@@ -99,17 +99,46 @@ public class TeacherController
         return ResponseEntity.ok("Password updated successfully");
     }
 
-    // http://localhost:8080/api/teachers/1001/rate
+//    // http://localhost:8080/api/teachers/1001/rate
+//    @PutMapping("/{id}/rate")
+//    public ResponseEntity<String> rateTeacher(@PathVariable("id") Long teacherId, @RequestBody Map<String, Long> request) {
+//        Long ratingValue = request.get("rating");
+//
+//        if (ratingValue == null) {
+//            return ResponseEntity.badRequest().body("Rating value is required");
+//        }
+//
+//        teacherService.rateTeacher(teacherId, ratingValue);
+//        return ResponseEntity.ok("Teacher rated successfully");
+//    }
+
+    // URL: http://localhost:8080/api/teachers/1001/rate?rating=5
     @PutMapping("/{id}/rate")
-    public ResponseEntity<String> rateTeacher(@PathVariable("id") Long teacherId, @RequestBody Map<String, Long> request) {
-        Long ratingValue = request.get("rating");
+    public ResponseEntity<String> rateTeacher(
+            @PathVariable("id") Long id,
+            @RequestParam("rating") Long ratingValue) { // Changed @RequestBody to @RequestParam
 
         if (ratingValue == null) {
             return ResponseEntity.badRequest().body("Rating value is required");
         }
 
-        teacherService.rateTeacher(teacherId, ratingValue);
+        teacherService.rateTeacher(id, ratingValue);
         return ResponseEntity.ok("Teacher rated successfully");
+    }
+
+//    // http://localhost:8080/api/teachers/subject/DBMS
+//    @GetMapping("/subject/{subject}")
+//    public ResponseEntity<<List<TeacherDto>> getTeacherBySubject(@PathVariable("subject") String subject) {
+//        TeacherDto teacherDto = teacherService.getTeacherBySubject(subject);
+//        return ResponseEntity.ok(teacherDto);
+//    }
+
+    // http://localhost:8080/api/teachers/subject/DBMS
+    @GetMapping("/subject/{subject}")
+    public ResponseEntity<List<TeacherDto>> getTeacherBySubject(@PathVariable("subject") String subject) {
+        // This now receives the List from your updated service
+        List<TeacherDto> teachers = teacherService.getTeacherBySubject(subject);
+        return ResponseEntity.ok(teachers);
     }
 
 }
