@@ -126,13 +126,6 @@ public class TeacherServiceImpl implements TeacherService
         teacherRepository.save(teacher);
     }
 
-//    @Override
-//    public TeacherDto getTeacherBySubject(String subjectAssociated) {
-//        Teacher teacher = teacherRepository.findBySubjectAssociated(subjectAssociated)
-//                .orElseThrow(() -> new ResourceNotFoundException("No teacher found handling the subject: " + subjectAssociated));
-//
-//        return TeacherMapper.mapToTeacherDto(teacher);
-//    }
 
     @Override
     public List<TeacherDto> getTeacherBySubject(String subjectAssociated) {

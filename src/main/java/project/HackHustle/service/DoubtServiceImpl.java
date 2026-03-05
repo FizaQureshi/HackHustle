@@ -30,42 +30,9 @@ public class DoubtServiceImpl implements DoubtService {
         Doubt savedDoubt = doubtRepository.save(doubt);
 
         return DoubtMapper.mapToDoubtDto(savedDoubt);
-
-//        Student student = studentRepository.findById(doubtDto.getStudentId())
-//                .orElseThrow(() -> new ResourceNotFoundException("Student not found"));
-//
-//
-//        Teacher teacher = teacherRepository
-//                .findBySubjectAssociated(question.getSubject())  // adjust if needed
-//                .orElseThrow(() -> new ResourceNotFoundException("No teacher found"));
-//
-//        Doubt doubt = new Doubt();
-//        doubt.setQueryAsked(doubtDto.getQueryAsked());
-//        doubt.setStudent(student);
-//        doubt.setTeacher(teacher);
-//
-//        doubt.setDoubtStatus("Pending");
-//        doubt.setAnswerProvided("None");
-//
-//        Doubt saved = doubtRepository.save(doubt);
-//
-//        return DoubtMapper.mapToDoubtDto(saved);
     }
 
-//    @Override
-//    public DoubtDto updateDoubt(DoubtDto doubtDto)
-//    {
-//        Doubt doubt = doubtRepository.findById(doubtDto.getDoubtID()).orElseThrow(
-//                () -> new ResourceNotFoundException("Student does not exist with given id " + doubtDto.getDoubtID()));
-//
-//        doubt.setDoubtStatus(doubtDto.getDoubtStatus());
-//        doubt.setAnswerProvided(doubtDto.getAnswerProvided());
-//        doubtRepository.save(doubt);
-//
-//        return DoubtMapper.mapToDoubtDto(doubt);
-//    }
 
-    // project.HackHustle.service.DoubtServiceImpl
     @Override
     public DoubtDto updateDoubt(DoubtDto doubtDto) {
         Doubt doubt = doubtRepository.findById(doubtDto.getDoubtID()).orElseThrow(
@@ -97,14 +64,6 @@ public class DoubtServiceImpl implements DoubtService {
     @Override
     public List<DoubtDto> teacherDoubtList(Long teacherID)
     {
-//        List<Doubt> teacherList = doubtRepository.findAll().stream()
-//                .filter(d -> d.getTeacher() != null && d.getTeacher().getTeacherID().equals(teacherID))
-//                .toList();
-//
-//        if (teacherList.isEmpty())
-//        {
-//                throw new ResourceNotFoundException("No doubts found for teacher ID: " + teacherID);
-//        }
         List<Doubt> teacherList =
                 doubtRepository.findByTeacher_TeacherIDAndDoubtStatus(teacherID, "Pending");
 
@@ -124,47 +83,7 @@ public class DoubtServiceImpl implements DoubtService {
         return studentList.stream().map(DoubtMapper::mapToDoubtDto).toList();
     }
 
-//    @Override
-//    public DoubtDto createDoubt(DoubtDto doubtDto) {
-//
-//        Student student = studentRepository.findById(doubtDto.getStudentId())
-//                .orElseThrow(() -> new ResourceNotFoundException("Student not found"));
-//
-//        Teacher teacher = teacherRepository
-//                .findBySubjectAssociated(doubtDto.getSelectedSubject())
-//                .orElseThrow(() -> new ResourceNotFoundException("No teacher found for this subject"));
-//
-//        Doubt doubt = new Doubt();
-//        doubt.setQueryAsked(doubtDto.getQueryAsked());
-//        doubt.setStudent(student);
-//        doubt.setTeacher(teacher);
-//        doubt.setSelectedSubject(doubtDto.getSelectedSubject());
-//
-//        Doubt saved = doubtRepository.save(doubt);
-//
-//        return DoubtMapper.mapToDoubtDto(saved);
-//    }
 
-    // DoubtServiceImpl.java
-
-//    public DoubtDto createDoubt(DoubtDto doubtDto) {
-//        // 1. Fetch the specific teacher selected by the student
-//        // Use teacherId or teacherID as per your frontend consistency fix
-//        Teacher selectedTeacher = teacherRepository.findById(doubtDto.getTeacherID())
-//                .orElseThrow(() -> new RuntimeException("Teacher not found"));
-//
-//        // 2. Create the doubt entity
-//        Doubt doubt = new Doubt();
-//        doubt.setSelectedSubject(doubtDto.getSelectedSubject());
-//        doubt.setTeacher(selectedTeacher); // Assign the specific teacher
-//        doubt.setDoubtStatus("Pending"); // Ensuring the backend uses your corrected status
-//
-//        Doubt saved = doubtRepository.save(doubt);
-//        return DoubtMapper.mapToDoubtDto(saved);
-//    }
-
-
-    // project.HackHustle.service.DoubtServiceImpl
 
     @Override
     public DoubtDto createDoubt(DoubtDto doubtDto) {
