@@ -1,6 +1,7 @@
 package project.HackHustle.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -33,32 +34,43 @@ public class AuthController {
     // In-memory user password storage (demo only)
     private Map<String, String> userPasswords = new HashMap<>();
 
-  //  @PostMapping("/send-otp")
-//    public ResponseEntity<?> sendOtp(@RequestBody Map<String, String> request) {
-//
-//        String email = request.get("email");
-//
-//        if (email == null || email.isEmpty()) {
-//            return ResponseEntity.badRequest().body("Email is required");
-//        }
-//
-//        // Generate random 6-digit OTP
-//        String otp = String.format("%06d", new Random().nextInt(999999));
-//
-//        // Store OTP
-//        otpStorage.put(email, otp);
-//
-//        // Send Mail
-//        SimpleMailMessage message = new SimpleMailMessage();
-//        message.setTo(email);
-//        message.setSubject("HackHustle OTP Verification");
-//        message.setText("Your OTP is: " + otp);
-//        message.setFrom("hackhustle062@gmail.com");
-//
-//        mailSender.send(message);
-//
-//        return ResponseEntity.ok("OTP sent successfully");
-//    }
+
+    /**
+     * Sends OTP for Signup.
+     * Requirement: Email must NOT exist in the database.
+     */
+    //http://localhost:8080/auth/send-signup-otp
+    @PostMapping("/send-signup-otp")
+    public ResponseEntity<?> sendSignupOtp(@RequestBody Map<String, String> request) {
+        String email = request.get("email");
+
+        if (email == null || email.isEmpty()) {
+            return ResponseEntity.badRequest().body("Email is required");
+        }
+
+        // Logic for Signup: Check if email is already registered
+        boolean exists = studentRepository.findByEmailId(email).isPresent();
+
+        if (exists) {
+            // If it exists, we cannot sign up with this email
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("The given mail id already exists or Invalid mail id");
+        }
+
+        // Generate and send OTP
+        String otp = String.format("%06d", new Random().nextInt(999999));
+        otpStorage.put(email, otp);
+
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setTo(email);
+        message.setSubject("HackHustle OTP Verification");
+        message.setText("Your OTP is: " + otp);
+        message.setFrom("hackhustle062@gmail.com");
+
+        mailSender.send(message);
+
+        return ResponseEntity.ok("Signup OTP sent successfully");
+    }
+
 
     @PostMapping("/send-otp")
     public ResponseEntity<?> sendOtp(@RequestBody Map<String, String> request) {
@@ -69,7 +81,7 @@ public class AuthController {
             return ResponseEntity.badRequest().body("Email is required");
         }
 
-        // 🔹 Check if email exists in database
+        // Check if email exists in database
         Student student = studentRepository.findByEmailId(email)
                 .orElseThrow(() ->
                         new ResourceNotFoundException("Email not registered on platform"));
@@ -88,10 +100,6 @@ public class AuthController {
 
         return ResponseEntity.ok("OTP sent successfully");
     }
-
-
-
-
 
 
     @PostMapping("/verify-otp")
@@ -135,26 +143,4 @@ public class AuthController {
         return ResponseEntity.ok("Password reset successful");
     }
 
-
-//    @PostMapping("/reset-password")
-//    public ResponseEntity<?> resetPassword(@RequestBody Map<String, String> request) {
-//
-//        String email = request.get("email");
-//        String newPassword = request.get("newPassword");
-//
-//        if (email == null || newPassword == null) {
-//            return ResponseEntity.badRequest().body("Invalid request");
-//        }
-//
-//        // Encode password
-//        String encodedPassword = passwordEncoder.encode(newPassword);
-//
-//        // Store (Demo only)
-//        userPasswords.put(email, encodedPassword);
-//
-//        // Remove OTP after successful reset
-//        otpStorage.remove(email);
-//
-//        return ResponseEntity.ok("Password reset successful");
-//    }
 }
