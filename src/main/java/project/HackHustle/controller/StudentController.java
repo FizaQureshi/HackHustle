@@ -98,11 +98,23 @@ public class StudentController
     }
 
 
-
     @GetMapping("/email/{email}")
     public ResponseEntity<StudentDto> getStudentByEmail(@PathVariable String email) {
         StudentDto studentDto = studentService.getStudentByEmail(email);
         return ResponseEntity.ok(studentDto);
+    }
+
+    //http://localhost:8080/api/students/${studentId}/update-points
+    @PatchMapping("/{id}/update-points")
+    public ResponseEntity<StudentDto> updateStudentPoints(
+            @PathVariable("id") Long studentId,
+            @RequestBody Map<String, Long> updates) {
+
+        Long points = updates.get("points");
+        Long quizAttempted = updates.get("quizAttempted");
+
+        StudentDto updatedStudent = studentService.updateStudentPoints(studentId, points, quizAttempted);
+        return ResponseEntity.ok(updatedStudent);
     }
 
 }
