@@ -29,7 +29,7 @@ public class StudentController
         return new ResponseEntity<>(savedStudent, HttpStatus.CREATED);
     }
 
-    //http://localhost:8080/api/students/1001
+    //http://localhost:8080/api/students/
     @GetMapping("{emailId}")
     public ResponseEntity<StudentDto> getStudentById(@PathVariable("emailId") String studentId)
     {

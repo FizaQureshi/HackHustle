@@ -24,9 +24,9 @@ import java.util.concurrent.ConcurrentHashMap;
 public class BattleManagerService {
 
     private final SimpMessagingTemplate messagingTemplate;
-    private final QuestionService questionService; // 🔥 Injected to fetch your DB questions
+    private final QuestionService questionService; //Injected to fetch  DB questions
     private final Map<String, BattleRoom> activeBattles = new ConcurrentHashMap<>();
-    private final QuizBattleRepository quizBattleRepository; // 🔥 Inject this
+    private final QuizBattleRepository quizBattleRepository; // Inject this
     private final StudentRepository studentRepository;
     private final StudentService studentService;
     /* ================= CREATE ================= */
@@ -87,7 +87,7 @@ public class BattleManagerService {
         BattleRoom room = activeBattles.get(message.getCode());
         if (room == null || room.getStatus() != BattleStatus.LIVE) return;
 
-        // 🔥 LOG 1: Check karo message aa kya raha hai
+        //  LOG 1: Check  message
         System.out.println("📩 Received Answer: " + message.getAnswer() + " from " + message.getStudentEmail());
 
         Long actualStudentId = studentService.getStudentById(message.getStudentEmail()).getStudentId();
@@ -97,13 +97,13 @@ public class BattleManagerService {
 
         QuestionDto currentQuestion = room.getQuestions().get(currentIndex);
 
-        // 🔥 LOG 2: Check karo sahi answer kya hai
+        // LOG 2: Check  answer
         System.out.println("❓ Target Answer: " + currentQuestion.getCorrectAnswer());
 
         boolean isCorrect = currentQuestion.getCorrectAnswer().trim().equalsIgnoreCase(message.getAnswer().trim());
 
         if (isCorrect) {
-            // 🔥 LOG 3: Agar yahan tak pahunche toh hi score badhega
+
             System.out.println("✅ CORRECT! Adding 10 points to ID: " + actualStudentId);
             room.getScores().merge(actualStudentId, 10, Integer::sum);
         } else {
