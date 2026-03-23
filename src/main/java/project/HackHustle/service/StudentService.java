@@ -24,5 +24,7 @@ public interface StudentService
     //void loginStudent(String email, String password);
     void updatePassword(String email, String newPassword);
 
+    StudentDto updateStudentPoints(Long studentId, Long points, Long quizAttempted);
+
 
 }

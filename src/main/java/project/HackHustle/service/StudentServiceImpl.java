@@ -96,4 +96,17 @@ public class StudentServiceImpl implements StudentService
 
         return StudentMapper.mapToStudentDto(student); // use your existing mapper method
     }
+
+    @Override
+    public StudentDto updateStudentPoints(Long studentId, Long points, Long quizAttempted) {
+        Student student = studentRepository.findById(studentId).orElseThrow(
+                () -> new ResourceNotFoundException("Student does not exist with given id " + studentId));
+
+        // Update the specific fields
+        student.setPoints(points);
+        student.setQuizAttempted(quizAttempted);
+
+        Student updatedStudent = studentRepository.save(student);
+        return StudentMapper.mapToStudentDto(updatedStudent);
+    }
 }
