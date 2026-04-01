@@ -21,6 +21,7 @@ public interface QuestionRepository  extends JpaRepository<Question,Long> {
     )
 List<Question> findRandom20ByTopic(@Param("topicName") String TopicName);
     List<Question> findByTopic_TopicName(String topicName);
+    List<Question> findByTopic_TopicID(Long topicId);
 
     List<Question> findByTopic_Subject_SubjectID(Long subjectID);
 

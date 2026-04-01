@@ -12,4 +12,12 @@ public interface QuestionService {
 
     List<QuestionDto> getQuestionBySubject(Long subjectID);
     List<QuestionDto> getQuestionForQuiz();
+
+    QuestionDto addQuestion(QuestionDto questionDto);
+
+    QuestionDto updateQuestion(Long id, QuestionDto questionDto);
+
+    void deleteQuestion(Long id);
+
+    List<QuestionDto> getQuestionByTopicId(Long topicId);
 }
