@@ -42,4 +42,23 @@ public class SubjectController {
     {
         return ResponseEntity.ok(subjectService.getAllSubjectsProgress(emailId));
     }
+    @PostMapping
+    public ResponseEntity<SubjectDto> createSubject(@RequestBody SubjectDto dto) {
+
+        return ResponseEntity.ok(subjectService.createSubject(dto));
+    }
+    @DeleteMapping("/delete/{subjectId}")
+    public ResponseEntity<String> deleteSubject(@PathVariable Long subjectId) {
+        subjectService.deleteSubject(subjectId);
+        return ResponseEntity.ok("Subject deleted successfully");
+    }
+    @PatchMapping("/rename/{subjectId}")
+    public ResponseEntity<SubjectDto> renameSubject(
+            @PathVariable Long subjectId,
+            @RequestBody SubjectDto dto) {
+
+        return ResponseEntity.ok(
+                subjectService.renameSubject(subjectId, dto.getSubjectName())
+        );
+    }
 }

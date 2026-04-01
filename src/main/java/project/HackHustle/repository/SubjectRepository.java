@@ -28,4 +28,6 @@ public interface SubjectRepository extends JpaRepository<Subject,Long>
             "LEFT JOIN question_status qs ON q.question_id = qs.question_id AND qs.student_id = :studentId " +
             "GROUP BY s.subject_id", nativeQuery = true)
     List<Object[]> findAllSubjectsProgressNative(@Param("studentId") Long studentId);
+
+    boolean existsBySubjectName(String subjectName);
 }

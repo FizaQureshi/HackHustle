@@ -11,4 +11,7 @@ public interface SubjectService {
     SubjectDto getSubjectById(Long subjectID);
     List<TopicProgressResponseDto> getStudentProgress(String emailId, Long subjectId);
     List<SubjectProgressResponseDto> getAllSubjectsProgress(String emailId);
+    SubjectDto createSubject(SubjectDto dto);
+    void deleteSubject(Long subjectId);
+    SubjectDto renameSubject(Long subjectId, String newName);
 }

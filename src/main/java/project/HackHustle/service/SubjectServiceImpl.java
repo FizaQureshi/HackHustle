@@ -91,4 +91,45 @@ public class SubjectServiceImpl implements SubjectService {
             );
         }).collect(Collectors.toList());
     }
+    @Override
+    public SubjectDto createSubject(SubjectDto dto) {
+
+        if (dto.getSubjectName() == null || dto.getSubjectName().isBlank()) {
+            throw new RuntimeException("Subject name cannot be empty");
+        }
+        if (subjectRepository.existsBySubjectName(dto.getSubjectName())) {
+            throw new RuntimeException("Subject already exists");
+        }
+
+        Subject subject = new Subject();
+        subject.setSubjectName(dto.getSubjectName());
+        subject.setTotalQuestions(dto.getTotalQuestions());
+
+        Subject saved = subjectRepository.save(subject);
+
+        return SubjectMapper.mapToSubjectDto(saved);
+    }
+    @Override
+    public void deleteSubject(Long subjectId) {
+        Subject subject = subjectRepository.findById(subjectId)
+                .orElseThrow(() -> new RuntimeException("Subject not found"));
+
+        subjectRepository.delete(subject);
+    }
+    @Override
+    public SubjectDto renameSubject(Long subjectId, String newName) {
+
+        if (newName == null || newName.isBlank()) {
+            throw new RuntimeException("Subject name cannot be empty");
+        }
+
+        Subject subject = subjectRepository.findById(subjectId)
+                .orElseThrow(() -> new RuntimeException("Subject not found"));
+
+        subject.setSubjectName(newName);
+
+        Subject updated = subjectRepository.save(subject);
+
+        return SubjectMapper.mapToSubjectDto(updated);
+    }
 }

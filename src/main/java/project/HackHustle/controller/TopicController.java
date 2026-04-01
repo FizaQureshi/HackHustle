@@ -27,4 +27,25 @@ public class TopicController {
     public ResponseEntity<Long> countTopicsBySubjectId(@PathVariable Long subjectId) {
         return ResponseEntity.ok(topicService.countTopicsBySubjectId(subjectId));
     }
+    @PostMapping("/subject/{subjectId}")
+    public ResponseEntity<TopicDto> createTopic(
+            @PathVariable Long subjectId,
+            @RequestBody TopicDto dto) {
+
+        return ResponseEntity.ok(topicService.createTopic(subjectId, dto));
+    }
+    @DeleteMapping("/delete/{topicId}")
+    public ResponseEntity<Void> deleteTopic(@PathVariable Long topicId) {
+        topicService.deleteTopic(topicId);
+        return ResponseEntity.noContent().build();
+    }
+    @PatchMapping("/rename/ {topicId}")
+    public ResponseEntity<TopicDto> renameTopic(
+            @PathVariable Long topicId,
+            @RequestBody TopicDto dto) {
+
+        return ResponseEntity.ok(
+                topicService.renameTopic(topicId, dto.getTopicName())
+        );
+    }
 }
