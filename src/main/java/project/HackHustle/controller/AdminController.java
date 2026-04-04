@@ -21,8 +21,8 @@ public class AdminController {
         System.out.println("login");
         String email = credentials.get("email");
         String password = credentials.get("password");
-        System.out.println("Input Email: " + email);
-        System.out.println("Stored Admin Email: " + adminEmail);
+//        System.out.println("Input Email: " + email);
+//        System.out.println("Stored Admin Email: " + adminEmail);
         if (adminEmail.equals(email) && adminPassword.equals(password)) {
             // In a real app, you'd generate a JWT token here.
             // For now, we'll return a success message and a dummy token.

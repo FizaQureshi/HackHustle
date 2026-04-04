@@ -52,6 +52,7 @@ public class SubjectController {
         subjectService.deleteSubject(subjectId);
         return ResponseEntity.ok("Subject deleted successfully");
     }
+    
     @PatchMapping("/rename/{subjectId}")
     public ResponseEntity<SubjectDto> renameSubject(
             @PathVariable Long subjectId,
