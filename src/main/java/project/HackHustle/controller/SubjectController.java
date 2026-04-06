@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import project.HackHustle.dto.SubjectProgressResponseDto;
+import project.HackHustle.dto.SubjectWithTopicDto;
 import project.HackHustle.dto.TopicProgressResponseDto;
 import project.HackHustle.dto.SubjectDto;
 import project.HackHustle.service.SubjectService;
@@ -61,5 +62,9 @@ public class SubjectController {
         return ResponseEntity.ok(
                 subjectService.renameSubject(subjectId, dto.getSubjectName())
         );
+    }
+    @GetMapping("/with-topics")
+    public ResponseEntity<List<SubjectWithTopicDto>> getSubjectsWithTopics() {
+        return ResponseEntity.ok(subjectService.getAllSubjectsWithTopics());
     }
 }

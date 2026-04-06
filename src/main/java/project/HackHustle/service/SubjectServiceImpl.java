@@ -2,9 +2,7 @@ package project.HackHustle.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import project.HackHustle.dto.SubjectProgressResponseDto;
-import project.HackHustle.dto.TopicProgressResponseDto;
-import project.HackHustle.dto.SubjectDto;
+import project.HackHustle.dto.*;
 import project.HackHustle.entity.Student;
 import project.HackHustle.entity.Subject;
 import project.HackHustle.mapper.SubjectMapper;
@@ -131,5 +129,24 @@ public class SubjectServiceImpl implements SubjectService {
         Subject updated = subjectRepository.save(subject);
 
         return SubjectMapper.mapToSubjectDto(updated);
+    }
+    public List<SubjectWithTopicDto> getAllSubjectsWithTopics() {
+        List<Subject> subjects = subjectRepository.findAll();
+
+        return subjects.stream().map(subject -> {
+            List<TopicDto> topicDtos = subject.getTopics().stream()
+                    .map(topic -> new TopicDto(
+                            topic.getTopicID(),
+                            topic.getTopicName()
+                    ))
+                    .toList();
+
+            return new SubjectWithTopicDto(
+                    subject.getSubjectID(),
+                    subject.getSubjectName(),
+                    subject.getTotalQuestions(),
+                    topicDtos
+            );
+        }).toList();
     }
 }
