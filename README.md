@@ -107,25 +107,27 @@ Unlike conventional platforms, Hack Hustle emphasises **practice, mock interview
 ---
 
 ## Project Structure
+```
 HackHustle/
 │
 ├── backend/
-│ ├── controller/
-│ ├── service/
-│ ├── repository/
-│ └── model/
+│   ├── controller/
+│   ├── service/
+│   ├── repository/
+│   └── model/
 │
 ├── frontend/
-│ ├── components/
-│ ├── pages/
-│ └── services/
+│   ├── components/
+│   ├── pages/
+│   └── services/
 │
 ├── ai-module/
-│ ├── interview-analysis/
-│ └── feedback-generation/
+│   ├── interview-analysis/
+│   └── feedback-generation/
 │
 └── database/
-└── schema.sql
+    └── schema.sql
+```
 
 ---
 
@@ -140,30 +142,30 @@ HackHustle/
 ---
 
 ### Backend Setup
--cd backend
--mvn clean install
--mvn spring-boot:run
+- cd backend
+- mvn clean install
+- mvn spring-boot:run
 
 ---
 
 ### Frontend Setup
--cd frontend
--npm install
--npm start
+- cd frontend
+- npm install
+- npm start
 
 ---
 
 ### AI Module Setup
--cd ai-module
--pip install -r requirements.txt
--python app.py
+- cd ai-module
+- pip install -r requirements.txt
+- python app.py
 
 ---
 
 ### Database Setup
--CREATE DATABASE hack_hustle;
+- CREATE DATABASE hack_hustle;
 
--Update your database credentials in `application.properties`.
+- Update your database credentials in `application.properties`.
 
 ---
 
