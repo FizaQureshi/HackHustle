@@ -1,29 +1,29 @@
-# 🚀 Hack Hustle
+# Hack Hustle
 
-## 📌 Overview
+## Overview
 Hack Hustle is an AI-powered learning and assessment platform designed to help students practice, evaluate, and improve their technical skills in a structured and interactive way. The platform focuses on real-time learning, performance tracking, and personalized feedback rather than traditional testing systems.
 
 Unlike conventional platforms, Hack Hustle emphasises **practice, mock interviews, and doubt resolution**, enabling students to learn effectively and continuously improve.
 
 ---
 
-## 🎯 Key Features
+## Key Features
 
-### 🧠 Practice Module
+### Practice Module
 - Subject-wise and topic-wise categorised questions  
 - Automatically generated MCQs  
 - Helps students strengthen core concepts  
 
 ---
 
-### 📝 Quiz Module
+### Quiz Module
 - Interactive quizzes with real-time participation  
 - Performance tracking after each quiz  
 - Instant feedback for improvement  
 
 ---
 
-### 🎤 AI Mock Interview Module
+### AI Mock Interview Module
 - Simulates real interview scenarios  
 - AI asks questions dynamically  
 - Records user responses  
@@ -34,7 +34,7 @@ Unlike conventional platforms, Hack Hustle emphasises **practice, mock interview
 
 ---
 
-### ❓ Doubt Resolution Module
+### Doubt Resolution Module
 - Students can post doubts  
 - Teachers can:
   - View student queries  
@@ -43,14 +43,28 @@ Unlike conventional platforms, Hack Hustle emphasises **practice, mock interview
 
 ---
 
-### 📊 Progress Tracking
+### Progress Tracking
 - Tracks student performance topic-wise  
 - Displays completion percentage  
-- Helps users identify weak areas  
+- Helps users identify weak areas
 
 ---
 
-## ⚙️ Tech Stack
+### Teacher Module
+- Interactive doubt solving  
+- Can view number of students mentored  
+- Can view his/her rating provided by the student
+
+---
+
+### Admin
+- Can manage the entire platform functionalities
+- Can perform basic CRUD operations on subjects/topics/questions 
+- Have full access of users of the platform
+
+---
+
+## Tech Stack
 
 | Technology     | Usage                          |
 |---------------|--------------------------------|
@@ -62,7 +76,7 @@ Unlike conventional platforms, Hack Hustle emphasises **practice, mock interview
 
 ---
 
-## 🏗️ System Architecture
+## System Architecture
 
 - **Frontend (React)**  
   Handles UI/UX and communicates with backend via REST APIs  
@@ -78,24 +92,21 @@ Unlike conventional platforms, Hack Hustle emphasises **practice, mock interview
 
 ---
 
-## 🔐 Authentication & Security
+## Authentication & Security
 - User login system  
 - Session validation  
 - Secure API communication  
 
 ---
 
-## 📡 Real-Time Features
+## Real-Time Features
 - Quiz synchronization using WebSockets  
 - Ensures all participants receive questions simultaneously  
 - Maintains session consistency  
 
 ---
 
-## 📁 Project Structure
-## 📁 Project Structure
-
-
+## Project Structure
 HackHustle/
 │
 ├── backend/
@@ -116,12 +127,11 @@ HackHustle/
 └── database/
 └── schema.sql
 
-
 ---
 
-## 🚀 Installation & Setup
+## Installation & Setup
 
-### 🔧 Prerequisites
+### Prerequisites
 - Java (JDK 17+)
 - Node.js & npm
 - MySQL
@@ -129,38 +139,35 @@ HackHustle/
 
 ---
 
-### 🖥️ Backend Setup
-cd backend
-mvn clean install
-mvn spring-boot:run
-
-
----
-
-### 🌐 Frontend Setup
-cd frontend
-npm install
-npm start
-
+### Backend Setup
+-cd backend
+-mvn clean install
+-mvn spring-boot:run
 
 ---
 
-### 🧠 AI Module Setup
-cd ai-module
-pip install -r requirements.txt
-python app.py
-
-
----
-
-### 🗄️ Database Setup
-CREATE DATABASE hack_hustle;
-
-Update your database credentials in `application.properties`.
+### Frontend Setup
+-cd frontend
+-npm install
+-npm start
 
 ---
 
-## 📌 API Highlights
+### AI Module Setup
+-cd ai-module
+-pip install -r requirements.txt
+-python app.py
+
+---
+
+### Database Setup
+-CREATE DATABASE hack_hustle;
+
+-Update your database credentials in `application.properties`.
+
+---
+
+##  API Highlights
 - Authentication APIs  
 - Quiz APIs  
 - MCQ Generation APIs  
@@ -169,7 +176,7 @@ Update your database credentials in `application.properties`.
 
 ---
 
-## 📊 Future Enhancements
+## Future Enhancements
 - AI-based personalized recommendations  
 - Voice-based interviews  
 - Advanced analytics dashboard  
@@ -177,22 +184,5 @@ Update your database credentials in `application.properties`.
 
 ---
 
-## ⚠️ Limitations
-- Teachers cannot create or manage tests  
-- AI feedback depends on model accuracy  
-- Scalability can be improved with cloud deployment  
-
----
-
-## 🤝 Contribution
-Contributions are welcome! Feel free to fork and submit pull requests.
-
----
-
-## 📜 License
-This project is licensed under the MIT License.
-
----
-
-## 💡 Final Note
-Hack Hustle aims to transform technical interview preparation by combining **AI, real-time interaction, and structured learning** into one platform.
+## Final Note
+Hack Hustle is designed to strengthen core subject understanding through structured MCQ-based practice and engaging quiz experiences. The platform focuses on building strong fundamentals in technical subjects while keeping learning interactive, consistent, and performance-driven.
